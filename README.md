@@ -21,7 +21,7 @@ Hacettepe Üniversitesinin harita web-servisinin açık olarak paylaşıldığı
         </tr>
         <tr>
             <td> <a href="https://www.linkedin.com/in/cirpanrafet/">Rafet Çırpan</a> </td>
-            <td> <a href="https://github.com/Berke0609">https://github.com/Berke0609</a></td>
+            <td> <a href="https://github.com/cirpanrafet">https://github.com/Berke0609</a></td>
         </tr>
         <tr>
             <td> <a href="https://www.linkedin.com/in/fevzican-karakus/">Fevzican Karakuş</a> </td>
