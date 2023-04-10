@@ -25,7 +25,7 @@ Hacettepe Üniversitesinin harita web-servisinin açık olarak paylaşıldığı
         </tr>
         <tr>
             <td> <a href="https://www.linkedin.com/in/fevzican-karakus/">Fevzican Karakuş</a></td>
-            <td> fevizan@hacettepe</td>
+            <td> <a href="https://github.com/f-karakus">https://github.com/f-karakus</a></td>
         </tr>
         <tr>
             <td rowspan=3>2021-22</td>
