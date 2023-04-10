@@ -15,7 +15,7 @@ Hacettepe Üniversitesinin harita web-servisinin açık olarak paylaşıldığı
     </thead>
     <tbody>
         <tr>
-            <td> rowspan=3>2022-23</td>
+            <td rowspan=3>2022-23</td>
             <td> Berke Aygören </td>
             <td> berke@hacettepe.edu.tr </td>
         </tr>
@@ -27,6 +27,5 @@ Hacettepe Üniversitesinin harita web-servisinin açık olarak paylaşıldığı
             <td> Fevzican Karakuş</td>
             <td> fevizan@hacettepe</td>
         </tr>
-
     </tbody>
 </table>
