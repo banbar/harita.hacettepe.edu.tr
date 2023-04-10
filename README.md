@@ -27,5 +27,18 @@ Hacettepe Üniversitesinin harita web-servisinin açık olarak paylaşıldığı
             <td> Fevzican Karakuş</td>
             <td> fevizan@hacettepe</td>
         </tr>
+        <tr>
+            <td rowspan=3>2021-22</td>
+            <td> Muammer Özkan </td>
+            <td>  </td>
+        </tr>
+        <tr>
+            <td> Ekin Gönenç Uygun</td>
+            <td> </td>    
+        </tr>
+        <tr>
+            <td> Ayça Tabakoğlu</td>
+            <td> </td>
+        </tr>
     </tbody>
 </table>
