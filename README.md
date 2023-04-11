@@ -10,7 +10,7 @@ Hacettepe Üniversitesinin harita web-servisinin açık olarak paylaşıldığı
         <tr>
             <th>Yıl</th>
             <th>Ad Soyad</th>
-            <th>eposta</th>
+            <th>GitHub</th>
         </tr>
     </thead>
     <tbody>
