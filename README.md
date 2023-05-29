@@ -1,6 +1,6 @@
 # harita.hacettepe.edu.tr
 
-Hacettepe Üniversitesinin harita web-servisinin açık olarak paylaşıldığı proje.
+Hacettepe Üniversitesinin harita web-servisinin açık olarak paylaşıldığı poje.
 
 # Katkı Veren Öğrenciler
 
