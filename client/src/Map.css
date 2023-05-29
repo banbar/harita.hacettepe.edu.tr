@@ -1,0 +1,12 @@
+@import url("~leaflet/dist/leaflet.css");
+
+body,
+#root,
+.leaflet-container {
+  position: fixed;
+  overflow: visible;
+}
+
+.leaflet-control-zoom {
+  display: none;
+}

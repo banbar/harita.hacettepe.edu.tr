@@ -1,0 +1,106 @@
+.horizontalBar {
+  position:fixed;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #cc2647;
+  width: calc(100% - 398px);
+  height: 70px;
+  top:10px;
+  left: calc(288px + 72px + 20px);
+  border-radius: 10px;
+  margin-bottom: 0px;
+  transition: 0.2s ease-out;
+  color: whitesmoke;
+  pointer-events: auto;
+  font-family: "Encode Sans", sans-serif;
+  overflow: hidden;
+}
+  .horizontalBar:hover {
+    transition: 0.5s;
+  }
+  
+  #startMarker {
+    width: 25px;
+    height: 25px;
+    margin: 20px;
+  }
+  
+  #endMarker {
+    width: 30px;
+    height: 30px;
+    margin: 20px;
+  }
+  
+  
+  
+  .tofrom {
+    color: whitesmoke;
+    transition: 0.1s;
+  }
+  
+  .horizontalSpacer {
+    width: 60px;
+    font-size: 30pt;
+  }
+  
+  .verticalSpacer {
+    height: 40px;
+  }
+  
+  .bar {
+    margin-left: 17px;
+    margin-right: 17px;
+    font-size: 20pt;
+    color: #b7a57a;
+  }
+
+  #locationIconDiv {
+    margin-left: auto;
+    margin-right: 10px;
+    margin-top: 1px;
+  }
+  
+  #githubIcon {
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+  }
+
+
+  @media only screen and (max-width: 600px) {
+    /*
+      @media only screen and (max-device-width: 600px) {
+          #title {
+              font-size: 50px;
+              word-break: break-all;
+          }
+     
+     }*/
+     #githubIcon {
+      width: 25px;
+      height: 25px;
+      cursor: pointer;
+    }
+  
+
+     #startMarker {
+      width: 20px;
+      height: 20px;
+      margin: 20px;
+    }
+    
+    #endMarker {
+      width: 20px;
+      height: 20px;
+      margin: 20px;
+    }
+    
+
+     .horizontalBar {
+    font-size: 9px;
+    }
+  }
+
+  
