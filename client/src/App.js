@@ -50,7 +50,9 @@ const App = () => {
       console.error(error);
     }
   };
-  
+
+  // Axios aracılığıyla belirli bir API'den çizgi verilerini alır ve alınan verileri uygun bir şekilde düzenleyip durum değişkenine kaydeder
+  // Retrieves line data from a specific API via Axios and edits the received data accordingly and saves it in the state variable
   const getLines = async () => {
     try {
       const response = await axiosInstance.get("http://localhost:8000/beytepe_roads_rev2");
@@ -69,8 +71,9 @@ const App = () => {
       console.error(error);
     }
   };
-
   
+  // Axios aracılığıyla belirli bir API'den bina verilerini alır ve alınan verileri uygun bir şekilde düzenleyip durum değişkenine kaydeder
+  // Retrieves building data from a specific API via Axios and edits the received data accordingly and saves it in the state variable
   const getBuildings = async () => {
     try {
       const response = await axiosInstance.get("http://localhost:8000/binalar");
@@ -86,7 +89,9 @@ const App = () => {
       console.error(error);
     }
   };
-  
+
+  // Axios aracılığıyla belirli bir API'den otopark verilerini alır ve alınan verileri uygun bir şekilde düzenleyip durum değişkenine kaydeder
+  // Retrieves parks(car) data from a specific API via Axios and edits the received data accordingly and saves it in the state variable
   const getParks= async () => {
     try {
       const response = await axiosInstance.get("http://localhost:8000/otopark");
@@ -118,6 +123,9 @@ const App = () => {
       console.error(error);
     }
   };
+
+  // Komponent yüklendiğinde, getNodes, getLines ve getBuildings fonksiyonlarını çağırarak düğüm, çizgi ve bina verilerini alır
+  // When the component is loaded, it calls the getNodes, getLines, and getBuildings functions to retrieve the node, line, and building data
   useEffect(() => {
     getNodes();
     getLines();
@@ -125,6 +133,9 @@ const App = () => {
     getParks();
     getBina();
   }, []);
+
+  // Başlangıç düğümü seçeneği değiştiğinde, seçilen seçenek değerine göre başlangıç düğümünü ayarlar ve ilgili metni günceller
+  // When the start node option changes, it sets the starting node according to the selected option value and updates the corresponding text
   const handleStartNodeChange = (selectedOption) => {
     console.log("Selected option: ", selectedOption);
     if (selectedOption.value === "Konumum") {
@@ -138,18 +149,22 @@ const App = () => {
     }
   };
 
+  // Varış düğümü seçeneği değiştiğinde, seçilen seçeneğe göre varış düğümünü ayarlar ve ilgili metni günceller
+  // When the destination node option is changed, it sets the destination node according to the selected option and updates the relevant text
   const handleEndNodeChange = (selectedOption) => {
     setEndNode(selectedOption.value);
     const selectedBuilding = binalar.find((bina) => bina.id === parseInt(selectedOption.value));
     document.getElementById("to").textContent = selectedBuilding.name;
   };
 
+  // Seyahat türü seçeneği değiştiğinde, seçilen değere göre seyahat türünü ayarlar
+  // Sets the trip type based on the selected value when the trip type option is changed
   const handleTravelTypeChange = (event) => {
     setTravelType(event.target.value);
   };
-
-  
-
+      
+  // Rota hesaplaması yapılır ve rota düğümleri ve geometrisi güncellenir
+  // Route calculation is done and route nodes and geometry are updated
   const handleCalculateRoute = () => {
     if (startNode && endNode) {
       const routeNodes = Dijkstra(startNode, endNode, nodes, lines, travelType);
@@ -162,7 +177,8 @@ const App = () => {
     }
   };
   
-  
+  // Rota düğümlerine ve çizgilere dayanarak rota geometrisini hesaplar ve döndürür
+  // Calculates and returns route geometry based on route nodes and lines
   const getRouteGeometry = (routeNodes, lines) => {
     const routeGeometry = routeNodes.reduce((acc, nodeId, index) => {
       if (index < routeNodes.length - 1) {
@@ -189,6 +205,9 @@ const App = () => {
       
     return routeGeometry;
   };
+
+  // Bina seçenekleri, kullanıcı konumu seçeneğiyle birlikte binalar listesinden oluşturulur
+  // Building options are created from the list of buildings with the user location option
   const buildingOptions = useMemo(() => [
     {
       value: "Konumum",
@@ -200,13 +219,18 @@ const App = () => {
     })),
   ], [binalar]);
 
+  // Yan panelin açılıp kapanmasını sağlar
+  // Allows the sidebar panel to be opened and closed
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
+  // Konum izni takipçisini temizler
+  // clears location permission tracker
   useEffect(() => {
     let watcher = null;
-    
+    // Konum izni verildiğinde, kullanıcının konumunu takip eder ve en yakın düğümü bulur
+    // When location permission is granted, it will track the user's location and find the nearest node
     if (isStartNodeCurrentLocation && navigator.geolocation) {
       watcher = navigator.geolocation.watchPosition(
         (position) => {
@@ -230,7 +254,9 @@ const App = () => {
       }
     };
   }, [isStartNodeCurrentLocation]);
-
+  
+  // En yakın düğümü bulma işlemi
+  // Finding the nearest node
   const getNearestNode = () => {
     let minDistance = Infinity;
     let nearestNode = null;
@@ -245,14 +271,18 @@ const App = () => {
 
     return nearestNode;
   };
-
+  
+  // Başlangıç düğümünü güncelleme işlemi
+  // Update the starting node
   useEffect(() => {
     if (isStartNodeCurrentLocation && userLat && userLng && nodes.length > 0) {
       const nearestNode = getNearestNode();
       setStartNode(nearestNode.id);
     }
   }, [isStartNodeCurrentLocation, userLat, userLng, nodes]);
-  
+
+  // İki nokta arasındaki mesafeyi hesaplama işlemi
+  // Calculating the distance between two points
   const getDistance = (lat1, lng1, lat2, lng2) => {
     return haversineDistance({lat: lat1, lng: lng1}, {lat: lat2, lng: lng2});
   };
@@ -262,6 +292,23 @@ const App = () => {
     console.log(building)
   };
 
+    // Harita bileşenini render etme işlemi
+    // The process of rendering the map component
+
+    // Sol kenar çubuğunu render etme işlemi
+    // The process of rendering the left sidebar
+
+    // Sağ kenar çubuğunu render etme işlemi
+    //Rendering the right sidebar
+
+    // Yatay çubuğu render etme işlemi
+    // Rendering the horizontal bar
+
+    // Konumumu kullanma düğmesini render etme işlemi
+    // The process of rendering the button to use my location
+
+    // JSX yapısını döndürme işlemi
+    // return the JSX structure
 
   return (
     <div>
@@ -275,8 +322,7 @@ const App = () => {
       userLat= {userLat}
       userLng= {userLng}
       selectedBuilding={selectedBina}
-  
-      
+       
     />
     <SidebarLeft
     isOpen={isOpen} 
@@ -289,9 +335,6 @@ const App = () => {
     bina={bina}
     handleBinaClick={handleBinaClick}
   
-    
-    
-
     />
    <SidebarRight isOpen={isOpen} onClick={toggleSidebar} />
    <HorizontalBar isOpen={isOpen}
