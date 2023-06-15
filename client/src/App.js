@@ -124,8 +124,8 @@ const App = () => {
     }
   };
 
-  // Komponent yüklendiğinde, getNodes, getLines ve getBuildings fonksiyonlarını çağırarak düğüm, çizgi ve bina verilerini alır
-  // When the component is loaded, it calls the getNodes, getLines, and getBuildings functions to retrieve the node, line, and building data
+  // Komponent yüklendiğinde, getNodes, getLines, getBuildings, getParks ve getBina fonksiyonlarını çağırarak düğüm, çizgi ve bina verilerini alır
+  // When the component is loaded, it calls the getNodes, getLines, getBuildings, getParks and getBina functions to retrieve the node, line, and building data
   useEffect(() => {
     getNodes();
     getLines();
