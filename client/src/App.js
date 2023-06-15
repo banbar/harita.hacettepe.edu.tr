@@ -10,8 +10,8 @@
   import haversineDistance from 'haversine-distance';
   
   
- 
-
+  // State variables and their initializations for managing nodes, lines, buildings, routes, user location, and other UI-related data
+  // Düğümleri, çizgileri, binaları, rotaları, kullanıcı konumunu ve diğer UI ile ilgili verileri yönetmek için durum değişkenleri ve başlangıç değerleri
   const App = () => {
     const [nodes, setNodes] = useState([]);
     const [lines, setLines] = useState([]);
@@ -30,8 +30,8 @@
     const [selectedBina, setSelectedBina] = useState(null);
 
 
-   
-
+    // Retrieves node data from a specific API through Axios, organizes it appropriately and saves it in the state variable
+    // Axios aracılığıyla belirli bir API'den düğüm verilerini alır ve alınan verileri uygun bir şekilde düzenleyip durum değişkenine kaydeder
     const axiosInstance = axios.create({baseURL:process.env.REACT_APP_API_URL,});
     const getNodes = async () => {
       try {
