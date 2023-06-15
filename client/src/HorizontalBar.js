@@ -2,7 +2,8 @@ import React from 'react';
 import './horizontalbar.css';
 
 const HorizontalBar = ({travelType, isOpen }) => {
-
+    // Stil nesnesini tanımlama
+    // Define the style object
     const horizontalBarStyle = {
         left: isOpen ? 'calc(288px + 72px + 20px)' : 'calc(72px + 6px)',
         width: isOpen ? 'calc(100% - 398px)' : 'calc(100% - 90px)',
