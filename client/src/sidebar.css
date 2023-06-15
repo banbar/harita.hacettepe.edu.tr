@@ -251,3 +251,46 @@
 #uw-wordmark {
   width: 120px;
 }
+
+.building-container {
+  max-height: 200px; /* İstediğiniz yüksekliği burada ayarlayabilirsiniz */
+  overflow-y: auto;
+  margin-left: 20px /* Fare tekerleği ile kaydırmaya izin verir */
+}
+
+.building-container::-webkit-scrollbar {
+  width: 0; /* Kaydırma çubuğunu gizler */
+  background: transparent; /* Arka planı saydam yapar */
+}
+
+.building-list {
+  list-style: none;
+  padding: 0;
+}
+
+.building-item {
+  color: white; /* Yazı rengini beyaz yapar */
+  font-weight: bold; /* Yazıyı daha kalın yapar */
+  margin-bottom: 10px; /* İstediğiniz boşluk miktarını burada ayarlayabilirsiniz */
+}
+
+/* Örnek stil */
+
+.building-list {
+  list-style: none;
+  padding: 0;
+}
+
+
+
+.building-item:hover {
+  background-color: lightgray;
+}
+
+.searchBar{
+  margin-left: 20px;
+}
+
+.building-item.selected {
+  background-color: #e6e6e6;
+}

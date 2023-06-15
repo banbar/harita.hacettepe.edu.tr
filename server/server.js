@@ -35,6 +35,15 @@ app.get('/otopark', async(req,res) => {
     }
 })
 
+app.get('/bina', async(req,res) => {
+    try {
+        const bina = await pool.query('SELECT ST_X(ST_Transform(geom, 4326)) AS longitude, ST_Y(ST_Transform(geom, 4326)) AS latitude , id , web_site , bina_name FROM bina')
+        res.json(bina.rows)
+    } catch(err) {
+        console.error(error)
+    }
+})
+
 app.get('/binalar', async(req,res) => {
     try {
         const binalar = await pool.query('SELECT * FROM binalar')
@@ -43,6 +52,8 @@ app.get('/binalar', async(req,res) => {
         console.error(error)
     }
 })
+
+
 
 
 app.listen(PORT,() => {

@@ -8,6 +8,9 @@
   import SidebarRight from "./SidebarRight";
   import HorizontalBar from "./HorizontalBar";
   import haversineDistance from 'haversine-distance';
+  
+  
+ 
 
   const App = () => {
     const [nodes, setNodes] = useState([]);
@@ -22,13 +25,17 @@
     const [userLat, setUserLat] = useState(null);
     const [userLng, setUserLng] = useState(null);
     const [isStartNodeCurrentLocation, setIsStartNodeCurrentLocation] = useState(false);
+    const [carparks, setCarparks] = useState([]);
+    const [bina, setBina] = useState([]);
+    const [selectedBina, setSelectedBina] = useState(null);
 
-  
+
+   
 
     const axiosInstance = axios.create({baseURL:process.env.REACT_APP_API_URL,});
     const getNodes = async () => {
       try {
-        const response = await axiosInstance.get("http://localhost:8000/beytepenodesrev5");
+        const response = await axiosInstance.get("beytepenodesrev5");
         const json = response.data;
         const nodes = json.map((row) => ({
           id: row.node_id,
@@ -46,7 +53,7 @@
     
     const getLines = async () => {
       try {
-        const response = await axiosInstance.get("http://localhost:8000/beytepe_roads_rev2");
+        const response = await axiosInstance.get("beytepe_roads_rev2");
         const json = response.data;
         const lines = json.map((row) => ({
           start: row.start_id,
@@ -62,10 +69,11 @@
         console.error(error);
       }
     };
+
     
     const getBuildings = async () => {
       try {
-        const response = await axiosInstance.get("http://localhost:8000/binalar");
+        const response = await axiosInstance.get("binalar");
         const json = response.data;
         const binalar = json
           .map((row) => ({
@@ -79,10 +87,43 @@
       }
     };
     
+    const getParks= async () => {
+      try {
+        const response = await axiosInstance.get("otopark");
+        const json = response.data;
+        const carparks = json.map((row) => ({
+        id:row.node_id  
+        }));
+    
+        setCarparks(carparks);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const getBina= async () => {
+      try {
+        const response = await axiosInstance.get("bina");
+        const json = response.data;
+        const bina = json.map((row) => ({
+        id:row.id,
+        latitude: row.latitude,
+        longitude: row.longitude,
+        web_site:row.web_site,
+        bina_name:row.bina_name
+        }));
+        console.log(bina)
+        setBina(bina);
+      } catch (error) {
+        console.error(error);
+      }
+    };
     useEffect(() => {
       getNodes();
       getLines();
       getBuildings();
+      getParks();
+      getBina();
     }, []);
     const handleStartNodeChange = (selectedOption) => {
       console.log("Selected option: ", selectedOption);
@@ -134,12 +175,9 @@
           );
           if (line) {
             const coordinates = JSON.parse(line.geometry).coordinates;
-            // İlk koordinatı sadece ilk çizgi için ekleyin
-            if (index === 0) {
-              acc.push(coordinates[0]);
-            }
-            // Diğer koordinatları ekleyin ve son koordinatı sadece son çizgi için ekleyin
-            if (parseInt(line.start) === nodeId) {
+        
+            if (index === 0 && parseInt(line.start) === nodeId) {
+            } else if (parseInt(line.start) === nodeId) {
               acc.push(...coordinates.slice(1));
             } else {
               acc.push(...coordinates.slice(0, -1).reverse());
@@ -148,7 +186,7 @@
         }
         return acc;
       }, []);
-    
+        
       return routeGeometry;
     };
     const buildingOptions = useMemo(() => [
@@ -218,7 +256,12 @@
     const getDistance = (lat1, lng1, lat2, lng2) => {
       return haversineDistance({lat: lat1, lng: lng1}, {lat: lat2, lng: lng2});
     };
-    
+
+    const handleBinaClick = (building) => {
+      setSelectedBina(building);
+      console.log(building)
+    };
+  
   
     return (
       <div>
@@ -231,6 +274,9 @@
         routeGeometry={routeGeometry}
         userLat= {userLat}
         userLng= {userLng}
+        selectedBuilding={selectedBina}
+    
+        
       />
       <SidebarLeft
       isOpen={isOpen} 
@@ -240,6 +286,11 @@
       handleCalculateRoute={handleCalculateRoute}
       handleTravelTypeChange={handleTravelTypeChange}
       travelType={travelType}
+      bina={bina}
+      handleBinaClick={handleBinaClick}
+    
+      
+      
 
       />
      <SidebarRight isOpen={isOpen} onClick={toggleSidebar} />
