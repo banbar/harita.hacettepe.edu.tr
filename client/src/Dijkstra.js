@@ -1,5 +1,6 @@
 import dijkstra from "dijkstrajs";
-
+// Graf yapısı oluşturuldu
+// Graph structure created
 const Dijkstra = (startNode, endNode, nodes, lines, travelType) => {
   const graph = {};
 
@@ -24,6 +25,8 @@ const Dijkstra = (startNode, endNode, nodes, lines, travelType) => {
   return path.map((node) => parseInt(node));
 };
 
+// Seyahat türüne göre izin verilen yol türlerini döndürme işlemi
+// Operation to return allowed road types based on travel type
 const getAllowedRoadTypes = (travelType) => {
   switch (travelType) {
     case "engelli":
