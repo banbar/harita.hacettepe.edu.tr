@@ -1,76 +1,3 @@
-<<<<<<< Updated upstream
-  import MapComponent from "./Map1";
-  import React, { useEffect, useState, useMemo} from 'react';
-  import  Dijkstra  from './Dijkstra';
-  import './index.css';
-  import './Map.css';
-  import SidebarLeft from './SidebarLeft';
-  import axios from 'axios';
-  import SidebarRight from "./SidebarRight";
-  import HorizontalBar from "./HorizontalBar";
-  import haversineDistance from 'haversine-distance';
-  
-  
-  // State variables and their initializations for managing nodes, lines, buildings, routes, user location, and other UI-related data
-  // Düğümleri, çizgileri, binaları, rotaları, kullanıcı konumunu ve diğer UI ile ilgili verileri yönetmek için durum değişkenleri ve başlangıç değerleri
-  const App = () => {
-    const [nodes, setNodes] = useState([]);
-    const [lines, setLines] = useState([]);
-    const [binalar, setBuildings] = useState([]);
-    const [startNode, setStartNode] = useState(null);
-    const [endNode, setEndNode] = useState(null);
-    const [route, setRoute] = useState([]);
-    const [routeGeometry,setRouteGeometry]= useState([]);
-    const [travelType, setTravelType] = useState("yaya");
-    const [isOpen, setIsOpen] = useState(true);
-    const [userLat, setUserLat] = useState(null);
-    const [userLng, setUserLng] = useState(null);
-    const [isStartNodeCurrentLocation, setIsStartNodeCurrentLocation] = useState(false);
-    const [carparks, setCarparks] = useState([]);
-    const [bina, setBina] = useState([]);
-    const [selectedBina, setSelectedBina] = useState(null);
-
-
-    // Retrieves node data from a specific API through Axios, organizes it appropriately and saves it in the state variable
-    // Axios aracılığıyla belirli bir API'den düğüm verilerini alır ve alınan verileri uygun bir şekilde düzenleyip durum değişkenine kaydeder
-    const axiosInstance = axios.create({baseURL:process.env.REACT_APP_API_URL,});
-    const getNodes = async () => {
-      try {
-        const response = await axiosInstance.get("beytepenodesrev5");
-        const json = response.data;
-        const nodes = json.map((row) => ({
-          id: row.node_id,
-          latitude: row.latitude,
-          longitude: row.longitude,
-          road_type: row.yol_turu,
-          road_direction: row.yol_yonu,
-        }));
-        setNodes(nodes);
-        console.log(nodes);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    
-    const getLines = async () => {
-      try {
-        const response = await axiosInstance.get("beytepe_roads_rev2");
-        const json = response.data;
-        const lines = json.map((row) => ({
-          start: row.start_id,
-          end: row.end_id,
-          distance: row.yol_uzunlk,
-          geometry: row.geom,
-          road_type: row.yol_turu,
-          road_direction: row.yol_yonu,
-        }));
-    
-        setLines(lines);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-=======
 import MapComponent from "./Map1";
 import React, { useEffect, useState, useMemo} from 'react';
 import  Dijkstra  from './Dijkstra';
@@ -102,7 +29,6 @@ const App = () => {
   const [bina, setBina] = useState([]);
   const [selectedBina, setSelectedBina] = useState(null);
 
->>>>>>> Stashed changes
 
   // Retrieves node data from a specific API through Axios, organizes it appropriately and saves it in the state variable
   // Axios aracılığıyla belirli bir API'den düğüm verilerini alır ve alınan verileri uygun bir şekilde düzenleyip durum değişkenine kaydeder
