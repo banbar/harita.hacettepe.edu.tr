@@ -78,7 +78,7 @@ const SidebarLeft = ({ isOpen, buildingOptions, handleStartNodeChange, handleEnd
                     <input type="radio" id="bisiklet" name="transport" value="bisiklet" checked={travelType === "bisiklet"} onChange={handleTravelTypeChange} />
                     <img src="assets/logos/bisiklet-logo.png" alt="Bisiklet" />
                   </label>
-                 
+            
                  
                   
                 </div>
@@ -88,6 +88,8 @@ const SidebarLeft = ({ isOpen, buildingOptions, handleStartNodeChange, handleEnd
             </button>
           </div>
           {/* Binalar */}
+          <br/>
+          
           <h6 id="buildingsHeader" className="header" onClick={() => toggleSection('bina')}>
             BİRİMLER
           </h6>
@@ -99,7 +101,7 @@ const SidebarLeft = ({ isOpen, buildingOptions, handleStartNodeChange, handleEnd
               type="text"
               className="searchBar"
               id="buildingsSearch"
-              placeholder="Bina Arayın..."
+              placeholder="Birim Arayın..."
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
             />
