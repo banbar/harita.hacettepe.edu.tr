@@ -37,7 +37,7 @@ Hacettepe Üniversitesinin harita web-servisinin açık olarak paylaşıldığı
             <td> </td>    
         </tr>
         <tr>
-            <td> <a href="https://www.linkedin.com/in/ay%C3%A7a-tabako%C4%9Flu-b33ab4195/" >Ayça Tabakoğlu</a>< /td>
+            <td> <a href="https://www.linkedin.com/in/ay%C3%A7a-tabako%C4%9Flu-b33ab4195/">Ayça Tabakoğlu</a></td>
             <td> </td>
         </tr>
     </tbody>
