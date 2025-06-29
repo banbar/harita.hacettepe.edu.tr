@@ -1,361 +1,521 @@
-import MapComponent from "./Map1";
-import React, { useEffect, useState, useMemo} from 'react';
-import  Dijkstra  from './Dijkstra';
-import './index.css';
-import './Map.css';
-import SidebarLeft from './SidebarLeft';
-import axios from 'axios';
-import SidebarRight from "./SidebarRight";
-import HorizontalBar from "./HorizontalBar";
-import haversineDistance from 'haversine-distance';
+import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import Sidebar from './components/Sidebar';
+import MapComponent from './components/MapComponent';
+import Birimler from './components/Birimler';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import LoginForm from './components/LoginForm';
+import RegisterForm from './components/RegisterForm';
+import ErrorBoundary from './components/ErrorBoundary';
+import SupervisorPanel from './components/SupervisorPanel';
+import jwt_decode from 'jwt-decode';
+import { Snackbar, Alert, Box, Button, Typography, IconButton } from '@mui/material';
+import 'leaflet/dist/leaflet.css';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { Paper, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import LanguageIcon from '@mui/icons-material/Language';
+import trFlag from './assets/tr-flag.png';
+import enFlag from './assets/en-flag.png';
+// src/App.js ya da hangi dosyada kullandıysan
+import { Stack } from '@mui/material';
+import LoginIcon from '@mui/icons-material/Login';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 
-// State variables and their initializations for managing nodes, lines, buildings, routes, user location, and other UI-related data
-// Düğümleri, çizgileri, binaları, rotaları, kullanıcı konumunu ve diğer UI ile ilgili verileri yönetmek için durum değişkenleri ve başlangıç değerleri
-const App = () => {
-  const [nodes, setNodes] = useState([]);
-  const [lines, setLines] = useState([]);
-  const [binalar, setBuildings] = useState([]);
-  const [startNode, setStartNode] = useState(null);
-  const [endNode, setEndNode] = useState(null);
-  const [route, setRoute] = useState([]);
-  const [routeGeometry,setRouteGeometry]= useState([]);
-  const [travelType, setTravelType] = useState("yaya");
-  const [isOpen, setIsOpen] = useState(true);
-  const [userLat, setUserLat] = useState(null);
-  const [userLng, setUserLng] = useState(null);
-  const [isStartNodeCurrentLocation, setIsStartNodeCurrentLocation] = useState(false);
-  const [carparks, setCarparks] = useState([]);
-  const [bina, setBina] = useState([]);
-  const [selectedBina, setSelectedBina] = useState(null);
+function App() {
+  // ==============================
+  // 1. Kullanıcı Kimlik Doğrulama Durumları
+  // ==============================
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userToken, setUserToken] = useState(null);
+  const [userRole, setUserRole] = useState(null);
+  const [username, setUsername] = useState('');
+  const [clearMapTrigger, setClearMapTrigger] = useState(0);
+  const [walkerActive, setWalkerActive] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const toggleSidebar = () => setSidebarOpen(o => !o);
+  const drawerWidth = 320;        // Sidebar açıkken genişlik
+  const collapsedWidth = 48;      // theme.spacing(6) = 6*8px
+  // ** Yeni: SupervisorPanel’ın gösterilip gösterilmediğini kontrol eden state **
+  const [showSupervisorPanel, setShowSupervisorPanel] = useState(false);
 
+  const [routeDistance, setRouteDistance] = useState(null);
+  const { t, i18n } = useTranslation();
 
-  // Retrieves node data from a specific API through Axios, organizes it appropriately and saves it in the state variable
-  // Axios aracılığıyla belirli bir API'den düğüm verilerini alır ve alınan verileri uygun bir şekilde düzenleyip durum değişkenine kaydeder
-  const axiosInstance = axios.create({baseURL:process.env.REACT_APP_API_URL,});
-  const getNodes = async () => {
-    try {
-      const response = await axiosInstance.get("http://localhost:8000/beytepenodesrev5");
-      const json = response.data;
-      const nodes = json.map((row) => ({
-        id: row.node_id,
-        latitude: row.latitude,
-        longitude: row.longitude,
-        road_type: row.yol_turu,
-        road_direction: row.yol_yonu,
-      }));
-      setNodes(nodes);
-      console.log(nodes);
-    } catch (error) {
-      console.error(error);
-    }
+  // ==============================
+  // 2. Rota Hesaplama Durumları
+  // ==============================
+  const [startPoint, setStartPoint] = useState(null);
+  const [endPoint, setEndPoint] = useState(null);
+  const [transportMode, setTransportMode] = useState('walking'); // Varsayılan olarak 'walking'
+  const [routeTrigger, setRouteTrigger] = useState(0); // Rota tetikleyicisi
+
+  // ==============================
+  // 3. Seçim Modu Durumu
+  // ==============================
+  const [selectionMode, setSelectionMode] = useState(null); // 'start', 'end', veya null
+  // 9.12. Haritayı Temizle (Sidebar’daki butondan çağrılacak)
+  const handleClearMap = () => {
+    setStartPoint(null);
+    setEndPoint(null);
+    setRouteDistance(null);
+    setSearchResults([]);
+    setSelectedBirim(null);
+    // MapComponent içindeki clearMap()’i çalıştırmak için:
+    setClearMapTrigger(prev => prev + 1);
   };
+  // ==============================
+  // 4. Arama Durumları
+  // ==============================
+  const [searchResults, setSearchResults] = useState([]);
+  const [showSearchResults, setShowSearchResults] = useState(false);
 
-  // Axios aracılığıyla belirli bir API'den çizgi verilerini alır ve alınan verileri uygun bir şekilde düzenleyip durum değişkenine kaydeder
-  // Retrieves line data from a specific API via Axios and edits the received data accordingly and saves it in the state variable
-  const getLines = async () => {
-    try {
-      const response = await axiosInstance.get("http://localhost:8000/beytepe_roads_rev2");
-      const json = response.data;
-      const lines = json.map((row) => ({
-        start: row.start_id,
-        end: row.end_id,
-        distance: row.yol_uzunlk,
-        geometry: row.geom,
-        road_type: row.yol_turu,
-        road_direction: row.yol_yonu,
-      }));
-  
-      setLines(lines);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  
-  // Axios aracılığıyla belirli bir API'den bina verilerini alır ve alınan verileri uygun bir şekilde düzenleyip durum değişkenine kaydeder
-  // Retrieves building data from a specific API via Axios and edits the received data accordingly and saves it in the state variable
-  const getBuildings = async () => {
-    try {
-      const response = await axiosInstance.get("http://localhost:8000/binalar");
-      const json = response.data;
-      const binalar = json
-        .map((row) => ({
-          id: row.bina_id,
-          name: row.bina_adı,
-        }))
-        .sort((a, b) => a.name.localeCompare(b.name, "tr"));
-      setBuildings(binalar);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // ==============================
+  // 5. Snackbar (Bildirim) Durumu
+  // ==============================
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 
-  // Axios aracılığıyla belirli bir API'den otopark verilerini alır ve alınan verileri uygun bir şekilde düzenleyip durum değişkenine kaydeder
-  // Retrieves parks(car) data from a specific API via Axios and edits the received data accordingly and saves it in the state variable
-  const getParks= async () => {
-    try {
-      const response = await axiosInstance.get("http://localhost:8000/otopark");
-      const json = response.data;
-      const carparks = json.map((row) => ({
-      id:row.node_id  
-      }));
-  
-      setCarparks(carparks);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // ==============================
+  // 6. Birimler (Units) Durumu
+  // ==============================
+  const [selectedBirim, setSelectedBirim] = useState(null);
+  const [isBirimlerOpen, setIsBirimlerOpen] = useState(false);
 
-  const getBina= async () => {
-    try {
-      const response = await axiosInstance.get("http://localhost:8000/bina");
-      const json = response.data;
-      const bina = json.map((row) => ({
-      id:row.id,
-      latitude: row.latitude,
-      longitude: row.longitude,
-      web_site:row.web_site,
-      bina_name:row.bina_name
-      }));
-      console.log(bina)
-      setBina(bina);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // ==============================
+  // 7. Refresh Trigger for Birimler.js
+  // ==============================
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
 
-  // Komponent yüklendiğinde, getNodes, getLines, getBuildings, getParks ve getBina fonksiyonlarını çağırarak düğüm, çizgi ve bina verilerini alır
-  // When the component is loaded, it calls the getNodes, getLines, getBuildings, getParks and getBina functions to retrieve the node, line, and building data
+  // ==============================
+  // 8. useEffect Hook'u: Sayfa Yüklendiğinde Token Kontrolü
+  // ==============================
   useEffect(() => {
-    getNodes();
-    getLines();
-    getBuildings();
-    getParks();
-    getBina();
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        const decoded = jwt_decode(token);
+        const currentTime = Date.now() / 1000;
+        if (decoded.exp > currentTime) {
+          setIsLoggedIn(true);
+          setUserToken(token);
+          setUserRole(decoded.role);
+          setUsername(decoded.username);
+
+          // Eğer role = 'supervisor' ise SupervisorPanel’i gösterecek şekilde state’i true yap:
+          if (decoded.role === 'supervisor') {
+            setShowSupervisorPanel(true);
+          }
+
+          setSnackbar({ open: true, message: t('login_success'), severity: 'success' });
+        } else {
+          localStorage.removeItem('token');
+        }
+      } catch (error) {
+        console.error('Token decode hatası:', error);
+        localStorage.removeItem('token');
+      }
+    }
   }, []);
 
-  // Başlangıç düğümü seçeneği değiştiğinde, seçilen seçenek değerine göre başlangıç düğümünü ayarlar ve ilgili metni günceller
-  // When the start node option changes, it sets the starting node according to the selected option value and updates the corresponding text
-  const handleStartNodeChange = (selectedOption) => {
-    console.log("Selected option: ", selectedOption);
-    if (selectedOption.value === "Konumum") {
-      setIsStartNodeCurrentLocation(true);
-      document.getElementById("from").textContent = selectedOption.value;
-    } else {
-      setIsStartNodeCurrentLocation(false);
-      setStartNode(selectedOption.value);
-      const selectedBuilding = binalar.find((bina) => bina.id === parseInt(selectedOption.value));
-      document.getElementById("from").textContent = selectedBuilding.name;
+  // ==============================
+  // 9. Handler Fonksiyonları
+  // ==============================
+
+  // 9.1. Giriş Başarılı Olduğunda
+  const handleLoginSuccess = (token, role, username) => {
+    setIsLoggedIn(true);
+    setUserToken(token);
+    setUserRole(role);
+    setUsername(username);
+    localStorage.setItem('token', token);
+
+    // Eğer supervisor girişi ise SupervisorPanel'ı göster
+    if (role === 'supervisor') {
+      setShowSupervisorPanel(true);
     }
+
+    setSnackbar({ open: true, message: t('login_success'), severity: 'success' });
   };
 
-  // Varış düğümü seçeneği değiştiğinde, seçilen seçeneğe göre varış düğümünü ayarlar ve ilgili metni günceller
-  // When the destination node option is changed, it sets the destination node according to the selected option and updates the relevant text
-  const handleEndNodeChange = (selectedOption) => {
-    setEndNode(selectedOption.value);
-    const selectedBuilding = binalar.find((bina) => bina.id === parseInt(selectedOption.value));
-    document.getElementById("to").textContent = selectedBuilding.name;
+  // 9.2. Çıkış Yapma Fonksiyonu
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setUserToken(null);
+    setUserRole(null);
+    setUsername('');
+    localStorage.removeItem('token');
+    setShowSupervisorPanel(false); // Eğer SupervisorPanel açıksa onu da kapat
+    setSnackbar({ open: true, message: t('logout_success'), severity: 'info' });
   };
 
-  // Seyahat türü seçeneği değiştiğinde, seçilen değere göre seyahat türünü ayarlar
-  // Sets the trip type based on the selected value when the trip type option is changed
-  const handleTravelTypeChange = (event) => {
-    setTravelType(event.target.value);
+  // 9.3. Snackbar'ı Kapatma Fonksiyonu
+  const handleCloseSnackbar = () => {
+    setSnackbar({ ...snackbar, open: false });
   };
-      
-  // Rota hesaplaması yapılır ve rota düğümleri ve geometrisi güncellenir
-  // Route calculation is done and route nodes and geometry are updated
-  const handleCalculateRoute = () => {
-    if (startNode && endNode) {
-      const routeNodes = Dijkstra(startNode, endNode, nodes, lines, travelType);
-      setRoute(routeNodes);
-      console.log("Route Nodes: ", routeNodes);
-  
-      const routeGeometry = getRouteGeometry(routeNodes, lines);
-      setRouteGeometry(routeGeometry);
-      console.log("Route Geometry: ", routeGeometry);
+
+  // 9.4. Rota Hesaplama Fonksiyonu
+  const handleCalculateRoute = (selectedStart, selectedEnd, mode) => {
+    if (!selectedStart || !selectedEnd) {
+      setSnackbar({ open: true, message: t('select_start_end'), severity: 'warning' });
+      return;
     }
-  };
-  
-  // Rota düğümlerine ve çizgilere dayanarak rota geometrisini hesaplar ve döndürür
-  // Calculates and returns route geometry based on route nodes and lines
-  const getRouteGeometry = (routeNodes, lines) => {
-    const routeGeometry = routeNodes.reduce((acc, nodeId, index) => {
-      if (index < routeNodes.length - 1) {
-        const line = lines.find(
-          (line) =>
-            (parseInt(line.start) === nodeId &&
-              parseInt(line.end) === routeNodes[index + 1]) ||
-            (parseInt(line.end) === nodeId &&
-              parseInt(line.start) === routeNodes[index + 1])
-        );
-        if (line) {
-          const coordinates = JSON.parse(line.geometry).coordinates;
-      
-          if (index === 0 && parseInt(line.start) === nodeId) {
-          } else if (parseInt(line.start) === nodeId) {
-            acc.push(...coordinates.slice(1));
-          } else {
-            acc.push(...coordinates.slice(0, -1).reverse());
-          }
-        }
-      }
-      return acc;
-    }, []);
-      
-    return routeGeometry;
+
+    setTransportMode(mode || transportMode);
+    setStartPoint(selectedStart);
+    setEndPoint(selectedEnd);
+    setRouteTrigger((prev) => prev + 1);
+    setSnackbar({ open: true, message: t('route_calculating'), severity: 'info' });
   };
 
-  // Bina seçenekleri, kullanıcı konumu seçeneğiyle birlikte binalar listesinden oluşturulur
-  // Building options are created from the list of buildings with the user location option
-  const buildingOptions = useMemo(() => [
-    {
-      value: "Konumum",
-      label: "Konumum",
-    },
-    ...binalar.map((bina) => ({
-      value: bina.id,
-      label: bina.name,
-    })),
-  ], [binalar]);
-
-  // Yan panelin açılıp kapanmasını sağlar
-  // Allows the sidebar panel to be opened and closed
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
+  // 9.5. Sidebar'dan Gelen Arama Sonuçlarını Alma Fonksiyonu
+  const handleSearchResults = (results) => {
+    setSearchResults(results);
+    setShowSearchResults(true);
   };
 
-  // Konum izni takipçisini temizler
-  // clears location permission tracker
-  useEffect(() => {
-    let watcher = null;
-    // Konum izni verildiğinde, kullanıcının konumunu takip eder ve en yakın düğümü bulur
-    // When location permission is granted, it will track the user's location and find the nearest node
-    if (isStartNodeCurrentLocation && navigator.geolocation) {
-      watcher = navigator.geolocation.watchPosition(
-        (position) => {
-          setUserLat(position.coords.latitude);
-          setUserLng(position.coords.longitude);
-          console.log("User position: ", position.coords.latitude, position.coords.longitude);
+  // 9.6. Arama Sonucuna Tıklama Fonksiyonu
+  const handleResultClick = (result) => {
+    setStartPoint(null);
+    setEndPoint(null);
+    setTransportMode('walking');
+    setSelectionMode(null);
+    setSnackbar({ open: true, message: t('search_navigating'), severity: 'info' });
 
-          const nearestNode = getNearestNode(position.coords.latitude, position.coords.longitude);
-          setStartNode(nearestNode.id);
-          handleCalculateRoute();
-        },
-        (error) => {
-          console.error("Geolocation error: ", error);
-        }
-      );
-    }
-    
-    return () => {
-      if (watcher) {
-        navigator.geolocation.clearWatch(watcher);
-      }
-    };
-  }, [isStartNodeCurrentLocation]);
-  
-  // En yakın düğümü bulma işlemi
-  // Finding the nearest node
-  const getNearestNode = () => {
-    let minDistance = Infinity;
-    let nearestNode = null;
-
-    nodes.forEach((node) => {
-      const distance = getDistance(userLat, userLng, node.latitude, node.longitude);
-      if (distance < minDistance) {
-        minDistance = distance;
-        nearestNode = node;
-      }
+    setStartPoint({
+      display_name: result.display_name,
+      lat: parseFloat(result.lat),
+      lng: parseFloat(result.lon),
     });
 
-    return nearestNode;
+    setEndPoint(null);
+    setShowSearchResults(false);
   };
-  
-  // Başlangıç düğümünü güncelleme işlemi
-  // Update the starting node
-  useEffect(() => {
-    if (isStartNodeCurrentLocation && userLat && userLng && nodes.length > 0) {
-      const nearestNode = getNearestNode();
-      setStartNode(nearestNode.id);
+
+  // 9.7. Arama Sonuçlarını Kapatma Fonksiyonu
+  const handleCloseSearchResults = () => {
+    setShowSearchResults(false);
+  };
+
+  // 9.8. Başlangıç Noktası Seçme Modunu Başlatma Fonksiyonu
+  const handleSelectStart = (point) => {
+    if (!point) {
+      setSelectionMode(null);
+      setStartPoint(null);
+    } else {
+      setSelectionMode('start');
+      setSnackbar({ open: true, message: t('select_start_instruction'), severity: 'info' });
     }
-  }, [isStartNodeCurrentLocation, userLat, userLng, nodes]);
-
-  // İki nokta arasındaki mesafeyi hesaplama işlemi
-  // Calculating the distance between two points
-  const getDistance = (lat1, lng1, lat2, lng2) => {
-    return haversineDistance({lat: lat1, lng: lng1}, {lat: lat2, lng: lng2});
   };
 
-  const handleBinaClick = (building) => {
-    setSelectedBina(building);
-    console.log(building)
+  // 9.9. Bitiş Noktası Seçme Modunu Başlatma Fonksiyonu
+  const handleSelectEnd = (point) => {
+    if (!point) {
+      setSelectionMode(null);
+      setEndPoint(null);
+    } else {
+      setSelectionMode('end');
+      setSnackbar({ open: true, message: t('select_end_instruction'), severity: 'info' });
+    }
   };
 
-    // Harita bileşenini render etme işlemi
-    // The process of rendering the map component
+  // 9.10. Harita Üzerinde Seçim Yapıldığında
+  const handleMapSelection = (type, point) => {
+    if (type === 'start') {
+      setStartPoint(point);
+      setSnackbar({ open: true, message: t('start_point_selected'), severity: 'success' });
+    } else if (type === 'end') {
+      setEndPoint(point);
+      setSnackbar({ open: true, message: t('end_point_selected'), severity: 'success' });
+    }
+    setSelectionMode(null);
+  };
 
-    // Sol kenar çubuğunu render etme işlemi
-    // The process of rendering the left sidebar
+  // 9.11. Birim Seçildiğinde
+  const handleBirimSelect = (birim) => {
+    setSelectedBirim(birim);
+    setIsBirimlerOpen(false);
+    setSnackbar({ open: true, message: `${birim.name} ${t('unit_selected')}`, severity: 'info' });
+    setRefreshTrigger((prev) => prev + 1);
+  };
 
-    // Sağ kenar çubuğunu render etme işlemi
-    //Rendering the right sidebar
+  // 9.12. Birimler Panelini Açma Fonksiyonu
+  const openBirimler = () => {
+    setIsBirimlerOpen(true);
+  };
 
-    // Yatay çubuğu render etme işlemi
-    // Rendering the horizontal bar
+  // ==============================
+  // Eğer Supervisor girişi yapılmış ve showSupervisorPanel = true ise SupervisorPanel'i göster
+  // ==============================
+  if (isLoggedIn && userRole === 'supervisor' && showSupervisorPanel) {
+    return (
+      <SupervisorPanel
+        userToken={userToken}
+        onLogout={handleLogout} // Oturumu kapatmak için
+        onBackToMain={() => setShowSupervisorPanel(false)} // “Ana Uygulamaya Dön” butonuna basılınca çalışacak
+      />
+    );
+  }
 
-    // Konumumu kullanma düğmesini render etme işlemi
-    // The process of rendering the button to use my location
-
-    // JSX yapısını döndürme işlemi
-    // return the JSX structure
-
+  // ==============================
+  // Normal görüntü: Sidebar + MapComponent + Birimler + Login/Register
+  // ==============================
   return (
-    <div>
-      <MapComponent
-      nodes={nodes}
-      lines={lines}
-      route={route}
-      startNode={startNode}
-      endNode={endNode}
-      routeGeometry={routeGeometry}
-      userLat= {userLat}
-      userLng= {userLng}
-      selectedBuilding={selectedBina}
-       
-    />
-    <SidebarLeft
-    isOpen={isOpen} 
-    buildingOptions={buildingOptions}
-    handleStartNodeChange={handleStartNodeChange}
-    handleEndNodeChange={handleEndNodeChange}
-    handleCalculateRoute={handleCalculateRoute}
-    handleTravelTypeChange={handleTravelTypeChange}
-    travelType={travelType}
-    bina={bina}
-    handleBinaClick={handleBinaClick}
-  
-    />
-   <SidebarRight isOpen={isOpen} onClick={toggleSidebar} />
-   <HorizontalBar isOpen={isOpen}
-    travelType={travelType} />
+    <ErrorBoundary>
+      <Box sx={{ display: 'flex', height: '100vh', position: 'relative' }}>
+        {/* ==============================
+        10. Sidebar Bileşeni
+        ============================== */}
+        <Sidebar
+         open={sidebarOpen}
+          toggleDrawer={toggleSidebar}
+          transportMode={transportMode}
+          setTransportMode={setTransportMode}
+          onCalculateRoute={handleCalculateRoute}
+          onSearchResults={handleSearchResults}
+          onSelectStart={handleSelectStart}
+          onSelectEnd={handleSelectEnd}
+          startPoint={startPoint}
+          endPoint={endPoint}
+          setSnackbar={setSnackbar}
+          routeDistance={routeDistance}
+          onClearMap={handleClearMap}
+          walkerActive={walkerActive}
+          setWalkerActive={setWalkerActive}
+        />
 
-  <button onClick={() => {
-      navigator.geolocation.getCurrentPosition((position) => {
-        setUserLat(position.coords.latitude);
-        setUserLng(position.coords.longitude);
-        console.log("Button - User position: ", position.coords.latitude, position.coords.longitude);
-      });
+        {/* ==============================
+        11. Ana İçerik Alanı
+        ============================== */}
+      <Box
+  sx={{
+    position: 'absolute',
+    top: 16,
+    // left’i sabit tutuyoruz, tüm durumlarda collapsedWidth + 8
+    left: sidebarOpen ? drawerWidth + 8 : collapsedWidth + 8,
+    zIndex: 1300,
+    transition: 'left 0.2s ease-in-out',
+  }}
+>
+  <IconButton
+    onClick={toggleSidebar}
+    size="small"
+    sx={{
+      // kapalıyken -1 spacing (8px) sola kaydır
+      ml: sidebarOpen ? 0 : -6,
+      transition: 'margin-left 0.2s ease-in-out',
+      bgcolor: 'common.white',
+      border: '1px solid',
+      borderColor: 'primary.main',
+      '&:hover': { bgcolor: 'primary.main', color: 'common.white' },
     }}
   >
-    Use My Location
-  </button> 
+    {sidebarOpen 
+      ? <ChevronLeftIcon fontSize="small"/>
+      : <ChevronRightIcon fontSize="small"/>}
+  </IconButton>
+</Box>
 
-  </div>
+        <Box sx={{ flexGrow: 1, position: 'relative' }}>
+          {/* ==============================
+          12. Üst Sağ Köşe: Birimler, Giriş/Kayıt veya Kullanıcı Bilgileri
+          ============================== */}
+         <Box
+  sx={{
+    position: 'absolute',
+    top: 16,
+    right: 16,
+    zIndex: 1200,
+  }}
+>
+  <Paper
+    elevation={1}
+    sx={{
+      p: 1,
+      borderRadius: 1,
+      bgcolor: 'rgba(255,255,255,0.9)',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 1,
+      minWidth: 160,
+      borderBottom: '1px solid',
+      borderColor: 'primary.main', 
+    }}
+  >
+      {/* Dil Seçici */}
+    <ToggleButtonGroup
+      value={i18n.language}
+      exclusive
+      onChange={(_, lang) => lang && i18n.changeLanguage(lang)}
+      size="small"
+      fullWidth
+      sx={{
+        borderRadius: 1,
+        '& .MuiToggleButton-root': {
+          p: 0.4,
+          minWidth: 32,
+          fontSize: '0.7rem',
+        },
+        '& .Mui-selected': {
+          bgcolor: 'primary.main',
+          color: 'primary.contrastText',
+        },
+      }}
+    >
+      <ToggleButton value="tr">
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.3 }}>
+          <Box component="img" src={trFlag} alt="TR" sx={{ width: 14, height: 10 }} />
+          TR
+        </Box>
+      </ToggleButton>
+      <ToggleButton value="en">
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.3 }}>
+          <Box component="img" src={enFlag} alt="EN" sx={{ width: 14, height: 10 }} />
+          EN
+        </Box>
+      </ToggleButton>
+    </ToggleButtonGroup>
+    {/* Giriş/Kayıt veya Kullanıcı Bilgisi */}
+    {!isLoggedIn ? (
+      <Stack direction="row" spacing={0.5} justifyContent="center">
+        <Button
+          startIcon={<LoginIcon fontSize="small" />}
+          variant="text"
+          size="small"
+          onClick={() => setIsLoginOpen(true)}
+          sx={{
+            border: '1px solid',
+            textTransform: 'none',
+            fontSize: '0.75rem',
+            color: 'primary.main',
+            px: 1,
+            '&:hover': { bgcolor: 'action.hover' },
+          }}
+        >
+          {t('login_button')}
+        </Button>
+        <Button
+          startIcon={<PersonAddIcon fontSize="small" />}
+          variant="text"
+          size="small"
+          onClick={() => setIsRegisterOpen(true)}
+          sx={{
+            border: '1px solid',
+            textTransform: 'none',
+            fontSize: '0.75rem',
+            color: 'primary.main',
+            px: 1,
+            '&:hover': { bgcolor: 'action.hover' },
+          }}
+        >
+          {t('register_button')}
+        </Button>
+      </Stack>
+    ) : (
+      <Stack direction="row" spacing={0.5} alignItems="center" justifyContent="center">
+        <Typography variant="body2" sx={{ fontSize: '0.75rem', color: 'text.primary' }}>
+          {t('welcome_message', { username })}
+        </Typography>
+        <Button
+          startIcon={<LogoutIcon fontSize="small" />}
+          variant="text"
+          size="small"
+          onClick={handleLogout}
+          sx={{
+            textTransform: 'none',
+            fontSize: '0.75rem',
+            color: 'error.main',
+            px: 1,
+            '&:hover': { bgcolor: 'action.hover' },
+          }}
+        >
+          {t('logout_button')}
+        </Button>
+      </Stack>
+    )}
 
   
-);
-};
+  </Paper>
+</Box>
 
-    
+
+
+  
+          {/* ==============================
+          13. MapComponent Bileşeni
+          ============================== */}
+          <MapComponent
+            isLoggedIn={isLoggedIn}
+            userRole={userRole}
+            userToken={userToken}
+            startPoint={startPoint}
+            endPoint={endPoint}
+            transportMode={transportMode}
+            setStartPoint={setStartPoint}
+            setEndPoint={setEndPoint}
+            selectionMode={selectionMode}
+            onMapSelection={handleMapSelection}
+            searchResults={searchResults}
+            setSnackbar={setSnackbar}
+            selectedBirim={selectedBirim}
+            setSelectedBirim={setSelectedBirim}
+            setSearchResults={setSearchResults}
+            routeTrigger={routeTrigger}
+            onRouteDistance={(d) => setRouteDistance(d)}
+            clearMapTrigger={clearMapTrigger}
+            walkerActive={walkerActive}
+            setWalkerActive={setWalkerActive}
+          />
+
+          {/* ==============================
+          14. Birimler Paneli
+          ============================== */}
+          {isBirimlerOpen && (
+            <Birimler
+              isLoggedIn={isLoggedIn}
+              userRole={userRole}
+              userToken={userToken}
+              onSelectBirim={handleBirimSelect}
+              onClose={() => setIsBirimlerOpen(false)}
+              refreshTrigger={refreshTrigger}
+            />
+          )}
+
+          {/* ==============================
+          15. Login ve Register Formları
+          ============================== */}
+          <LoginForm
+            open={isLoginOpen}
+            handleClose={() => setIsLoginOpen(false)}
+            onLoginSuccess={handleLoginSuccess}
+          />
+               <RegisterForm
+       open={isRegisterOpen}
+        handleClose={() => setIsRegisterOpen(false)}
+      />
+
+          {/* ==============================
+          16. Snackbar (Bildirim) Bileşeni
+          ============================== */}
+          <Snackbar
+            open={snackbar.open}
+            autoHideDuration={9000}
+            onClose={handleCloseSnackbar}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          >
+            <Alert onClose={handleCloseSnackbar} severity={snackbar.severity} sx={{ width: '100%' }}>
+              {snackbar.message}
+            </Alert>
+          </Snackbar>
+        </Box>
+      </Box>
+    </ErrorBoundary>
+  );
+}
+
 export default App;

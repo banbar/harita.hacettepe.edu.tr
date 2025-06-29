@@ -1,16 +1,21 @@
-import React from 'react';
+// src/index.js
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import "./index.css";
+import { I18nextProvider } from 'react-i18next';
+import i18n from './i18n';
+import './index.css';
+import 'leaflet/dist/leaflet.css';
+import { BrowserRouter } from 'react-router-dom';
 
-// 'root' elementini hedefleyerek bir ReactDOM kökü oluştur
-// Create a ReactDOM root by targeting the 'root' element
-const root = ReactDOM.createRoot(document.getElementById('root'));
-// ReactDOM kökünde uygulamayı render et
-// render app in ReactDOM root
+const container = document.getElementById('root');
+const root = ReactDOM.createRoot(container);
 root.render(
   <React.StrictMode>
-    <App />
+    <Suspense fallback={<div>Loading translations...</div>}>
+           <I18nextProvider i18n={i18n}>
+         <App />
+     </I18nextProvider>
+    </Suspense>
   </React.StrictMode>
 );
-

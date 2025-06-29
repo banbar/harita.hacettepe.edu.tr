@@ -1,0 +1,473 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <link rel="icon" href="/hu_logo_icon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacettepe Üniversitesi Aktüerya Bilimleri Bölümü</title>
+    <meta name="description" content="Hacettepe Üniversitesi Aktüerya Bilimleri Bölümü">
+    <meta name="keywords" content="Hacettepe Üniversitesi Aktüerya Bilimleri Bölümü">
+
+    <link href="https://aktuerya.hacettepe.edu.tr/src21/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/style.css?v=2" rel="stylesheet" />
+    <link href="https://aktuerya.hacettepe.edu.tr/src21/css/all.min.css" rel="stylesheet" />
+
+    <link href="https://aktuerya.hacettepe.edu.tr/src21/css/animate.css" rel="stylesheet" />
+
+    <script src="https://aktuerya.hacettepe.edu.tr/src21/js/jquery.min.js"></script>
+    <script src="https://aktuerya.hacettepe.edu.tr/src21/js/bootstrap.min.js"></script>
+    <script src="https://aktuerya.hacettepe.edu.tr/src21/js/main.js"></script>
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;0,800;1,300;1,400;1,700;1,800&display=swap" rel="stylesheet">
+
+			<!-- Global site tag (gtag.js) - Google Analytics -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=UA-144198075-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-144198075-1');
+</script>
+
+
+</head><body>
+
+<div class="container-fluid ust">
+    <div class="container">
+        <div class="menu logo">
+            <div class="logo_yazi">
+                <div class="banner_uni">Hacettepe Üniversitesi</div>
+                <div class="banner_uni_bolum">Aktüerya Bilimleri Bölümü</div>
+            </div>
+            <div class="menu_ust">
+                <div class="d-none d-md-block float-right ml-3">
+                    <a href="https://www.instagram.com/hacettepe_aktuerya/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/groups/227997854621658/" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="https://twitter.com/hacettepe1967" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.youtube.com/channel/UCMjlKeaPTnx05ntjpRUPtyw" target="_blank"><i class="fab fa-youtube"></i></a>
+                </div>
+                <div class="float-right d-none d-md-block ">
+                    <span class="but_lang_secili">TR</span>
+                    <span class="but_lang"><a href="https://aktuerya.hacettepe.edu.tr/en">EN</a></span>
+                </div>
+                <div class="float-right d-none d-md-block mr-4 ">
+                    <a href="../index.php" target="_blank">ANA SAYFA</a>
+                    <a href="../iletisim.php" target="_blank">İLETİŞİM</a>
+                </div>
+
+
+            </div>
+
+            <div class="menu_genel d-none d-sm-block d-md-none">
+                <!--yatay menu-->
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+<div class="site_baslangic"></div>
+
+<div class="site_baslangic"></div>
+
+<div class="resimler">
+    <link href="css/swiper.min.css" rel="stylesheet" type="text/css" />
+    <script src="js/swiper.min.js"></script>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+
+
+			
+            <div class="swiper-slide" style="background-image: url(https://aktuerya.hacettepe.edu.tr/slider/s232.jpg);" >
+                <div class="container h-100" style="position: relative;">
+                </div>
+            </div>
+
+            <div class="swiper-slide" style="background-image: url(https://aktuerya.hacettepe.edu.tr/slider/s231.jpg);" >
+                <div class="container h-100" style="position: relative;">
+                </div>
+            </div>
+
+            <div class="swiper-slide" style="background-image: url(https://aktuerya.hacettepe.edu.tr/slider/s234.jpg);" >
+                <div class="container h-100" style="position: relative;">
+                </div>
+            </div>
+
+            <div class="swiper-slide" style="background-image: url(https://aktuerya.hacettepe.edu.tr/slider/s235.jpg);" >
+                <div class="container h-100" style="position: relative;">
+                </div>
+            </div>
+
+            <div class="swiper-slide" style="background-image: url(https://aktuerya.hacettepe.edu.tr/slider/s233.jpg);" >
+                <div class="container h-100" style="position: relative;">
+                </div>
+            </div>
+
+            <!-- <div class="swiper-slide" style="background-image: url(https://aktuerya.hacettepe.edu.tr/slider/slide2.jpg);" >
+                <div class="container h-100" style="position: relative;">
+
+                </div>
+            </div> -->
+
+        </div>
+
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
+
+    </div>
+
+
+    <script>
+
+        var swiper = new Swiper('.swiper-container', {
+            autoplay: {
+                delay: 5000,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true
+            },
+
+
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            }
+        });
+
+    </script>
+
+<style>
+  .blink {
+    animation: blinker 1s linear infinite;
+  }
+
+  @keyframes blinker {
+    50% {
+      opacity: 0;
+    }
+  }
+</style>
+</div>
+
+
+
+<div class="container mt-5">
+    <div class="row">
+    <div class="col-lg-3 col-12 mb-3 d-none d-sm-block">
+
+         
+            <div class="menu_sol">
+
+            
+
+
+            
+
+
+<nav class="main-nav d-none d-lg-block">
+                    <div class="mobil_menu_logo mb-3"></div>
+                    <ul>
+                        <li><a href="../index.php" >Ana Sayfa</a></li>
+                        <li  class="drop-down"><a href="#">Hakkında</a>
+                            <ul>
+                                <li><a href="../bolum_hak.php" >Tanıtım</a></li>
+                                <li><a href="../misyon-vizyon.php" >Misyon ve Vizyon</a></li>
+                                <li><a href="../tarihce.php" >Tarihçe</a></li>
+                                <li><a href="../yonetim.php" >Yönetim</a></li>
+                                <li><a href="../duyurular/akt_Stratejik_Plan22.pdf" >Stratejik Plan</a></li>
+                            </ul>
+                        </li>
+
+                        <li><a href="../anabilimd.php" >Anabilim Dalları</a></li>
+
+                        <li  class="drop-down"><a href="#">Personel</a>
+                            <ul>
+                                <li><a href="../pers_ou.php" >Öğretim Üyeleri</a></li>
+                                <li><a href="../pers_eou.php" >Emekli Öğretim Üyeleri</a></li>
+                                <li><a href="../pers_og.php" >Öğretim Görevlileri</a></li>
+                                <li><a href="../pers_ag.php" >Araştırma Görevlileri</a></li>
+                                <li><a href="../pers_ip.php" >İdari Personel</a></li>
+                            </ul>
+                        </li>
+
+                        <li  class="drop-down"><a href="#">Programlar</a>
+                                <ul>
+                                <li><a href="../lisans.php">Lisans</a></li>
+                                <li>
+                                    <a href="../lis_ustu.php">Yüksek Lisans</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../lis_ustu-doktora.php">Doktora</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../yandal3.php">Yan Dal</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="../canadal3.php">Çift Anadal</a>
+                                </li>
+                                
+                                <li>
+                                <a href="../erasmus.php">Erasmus</a>
+                                </li>
+                                </ul>
+                        </li>
+
+
+                        <li  class="drop-down"><a href="#">Öğrenciler İçin</a>
+                            <ul>
+                            <li><a href="https://fenfakultesi.hacettepe.edu.tr/tr/menu/kanun_ve_yonetmelikler-166">Kanun ve Yönetmelikler</a></li>
+          
+		  <li><a target="_blank" href="http://akts.hacettepe.edu.tr/program_detay.php?birim_ref=AKDBRM_0000000000000000000000105&birim_kod=381&prg_oid=PRGRAM_0000000000000000000000114&prg_kod=381&programduzey=2&submenuheader=2&dil_kod=1">Ders Kataloğu / AKTS Bilgi Paketi</a></li>
+		  <li><a  target="_blank"  href="https://fenfakultesi.hacettepe.edu.tr/tr/menu/yararli_belgeler-51">Yararlı Belgeler</a></li>
+		  <li><a href="../staj.php">Staj</a></li>
+                            </ul>
+                        </li>
+						
+						
+						 <li  class="drop-down"><a href="#">Araştırma ve Projeler</a>
+                            <ul>
+						<li><a href="../projeler.php" >Projeler</a></li>
+						<li><a href="../arastirma.php" >Araştırma</a></li>
+						 </ul>
+                        </li>
+                        
+                        <li><a href="../etkinlikler.php" >Etkinlikler</a></li>
+                        <li><a href="https://fenfakultesi.hacettepe.edu.tr/tr/menu/yararli_belgeler-51" target="_blank">Yararlı Belgeler</a></li>
+                        <!-- <li><a href="../adayogrenciler.php" >Aday Öğrenciler</a></li> -->
+
+                        <li  class="drop-down"><a href="#">Aday Öğrenciler</a>
+                            <ul>
+                                <li><a href="https://fs.hacettepe.edu.tr/stat/dosyalar/duyuru22-23yili/2022-2023%20%C3%96%C4%9Frenci%20K%C4%B1lavuzu-web.pdf">Öğrenci Kılavuzu</a></li>
+                                <li><a href="/duyurular/aktueryatanitim2024.pdf" target="_blank">Bölüm Tanıtım Sunumu</a></li>
+                                
+                                <li><a href="https://mbsaktuerya.hacettepe.edu.tr/attachments/47627159-c683-43f2-bc1b-950491faba2b.pdf">Mezunlarımızın Görüşleri</a></li>
+                                <li><a href="https://youtu.be/79oBNjiD0Ag" target="_blank">Risk Topluluğu Bölüm Videosu </a></li>
+								<li><a href="https://aktuerya.hacettepe.edu.tr/duyurular/erasmus_ogrencilerimiz23.pdf">Erasmus Öğrencilerimiz </a></li>
+                                <li><a href="https://universitem.hacettepe.edu.tr/" >Üniversitemiz Genel Tanıtımı</a></li>
+                            </ul>
+                        </li>
+
+
+                        <li><a href="../resimler.php" >Galeri</a></li>
+                        <li><a href="../fedek.php" >FEDEK</a></li>
+                        <li><a href="../iletisim.php" >İletişim</a></li>
+
+                    </ul>
+                    <div class="mobil_menu_alt mt-3">
+                        <div class="d-flex justify-content-center mb-4">
+                            <a href="https://www.instagram.com/hacettepe_aktuerya/" target="_blank"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.facebook.com/groups/227997854621658/" target="_blank"><i class="fab fa-facebook"></i></a>
+                            <a href="https://twitter.com/hacettepe1967" target="_blank"><i class="fab fa-twitter"></i></a>
+                        </div>
+                        <div class="d-flex justify-content-center mb-4">
+                            <span class="but_lang_secili">TR</span>
+                            <span class="but_lang"><a href="../en/index.php">EN</a></span>
+                        </div>
+
+                        <div class=" mr-4 ">
+                            <a href="../index.php" target="_blank">ANA SAYFA</a>
+                            <a href="../iletisim.php" target="_blank">İLETİŞİM</a>
+                        </div>
+
+
+                    </div>
+                </nav>
+
+                </div>
+
+            <script src="https://aktuerya.hacettepe.edu.tr/src21/js/menu.js"></script>
+       
+
+
+        </div>
+        <div class="col-lg-9 col-12 mb-3">
+
+
+			<!-- <div class="baslik blink">Aday Öğrenciler</div>
+            <div class="icerik">
+			
+            <li><a href="https://fs.hacettepe.edu.tr/stat/dosyalar/duyuru22-23yili/2022-2023%20%C3%96%C4%9Frenci%20K%C4%B1lavuzu-web.pdf">Fen Fakültesi Öğrenci Kılavuzu </a></li>
+			<li><a href="https://youtu.be/79oBNjiD0Ag" target="_blank">Risk Topluluğu Bölüm Videosu </a></li>
+			<li><a href="https://aktuerya.hacettepe.edu.tr/duyurular/tanitim23.pdf">Bölüm Tanıtım Sunumu </a></li>
+			<li><a href="https://www.youtube.com/watch?v=4rrMFkwzCAg">Bölüm Tanıtım Videosu</a></li>
+            
+            <li><a href="https://twitter.com/ezginevruz/status/1182532014756507648" target="_blank">Bölüm Başkanımız Prof. Dr. Kasırga Yıldırak Aktüerya, Risk ve Veri Bilimini Anlatıyor</a></li>
+            <li><a href="https://aktuerya.hacettepe.edu.tr/duyurular/risk-gunleri-ky.mp4">Bölüm Başkanımız Prof. Dr. Kasırga Yıldırak'ın Risk Günleri Röportajı</a></li>
+			
+
+            
+
+			<li><a href="https://aktuerya.hacettepe.edu.tr/duyurular/erasmus_ogrencilerimiz23.pdf">Erasmus Öğrencilerimiz </a></li>
+            <li><a href="https://mbsaktuerya.hacettepe.edu.tr/attachments/47627159-c683-43f2-bc1b-950491faba2b.pdf">Mezunlarımızın Görüşleri </a></li>
+			<li><a href="https://www.instagram.com/hacettepe_aktuerya/">Bizi Takip Edin </a></li>
+			
+            </div> -->
+			
+			
+            <div class="icerik">
+            <p>Aktüerya bilimi insanların; doğum, ölüm, hastalık, sakatlık, emeklilik gibi yaşamını; yangın, kaza, deprem, sel, hırsızlık gibi mal varlığını etkileyen rastgeleliğe bağlı, öngörülemeyen olaylarla ve bu olayların finansal etkileriyle ilgilenir. Aktüerler, bu tür olayların oluşma riskini analiz etmek, olasılıklarını tahmin etmek ve bu olayların finansal etkilerini hafifletici güvenlik programlarını oluşturmak üzere eğitim alırlar. <a href="akt_hak.php">Devamı...</a></p>
+			
+            </div>
+
+
+ 
+ 
+ 
+
+            <div class="icerik">
+                <li><a href="https://oidb.hacettepe.edu.tr/tr/akademik_takvim_20242025-647" target="_blank">Akademik Takvim 2024-2025</a></li>
+            </div>
+            <div class="baslik">Ders Programları</div>
+            <div class="icerik" id="dersp">
+            <!-- <li><a href="https://mbsaktuerya.hacettepe.edu.tr/attachments/9c175cb8-40d5-433c-a4aa-2a6a07650fd2.pdf">2023-2024 Güz Yarıyılı Lisans Ders Programı </a></li>
+            <li><a href="https://mbsaktuerya.hacettepe.edu.tr/attachments/af1c3d04-ef51-494a-a51f-f64faab1ea0e.pdf">2023-2024 Güz Yarıyılı Lisansüstü Ders Programı </a></li>
+         -->
+         
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>
+
+</title>
+    <style>
+        p,a{font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #333333;}
+        
+    </style>
+</head>
+<body>
+    <form name="form1" method="post" action="./duyurularXmlAsIframedersp.aspx" id="form1">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKLTg0NTYxMzIxNQ8WAh4TVmFsaWRhdGVSZXF1ZXN0TW9kZQIBZGTVr60ASdlEeDMD9xupn085Bhtz3P2dHmdgNuFGXwUDrw==" />
+
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="30C10F1B" />
+    <div>
+    <p><a>2024-2025 Bahar Dönemi Lisans Ders Programı	</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/ef6d7ebd-760c-48cc-adca-73f5d721836c.pdf" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>7 Mart 2025</span></p><p><a>2024-2025 Bahar Dönemi Lisansüstü Ders Programı</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/efe20962-b997-40c6-8fbf-872deafdc911.pdf" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>7 Mart 2025</span></p>
+    </div>
+    </form>
+</body>
+</html>
+
+
+
+
+
+            </div>
+
+            <div class="baslik">Sınav Programları</div>
+            <div class="icerik">
+            <!-- <li><a href="https://mbsaktuerya.hacettepe.edu.tr/attachments/d67a48d2-6a65-41ad-9c06-5a17cbe11231.pdf">2023-2024 Güz Dönemi Üç ders Sınav Programı</a></li> -->
+            
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>
+
+</title>
+    <style>
+        p,a{font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #333333;}
+        
+    </style>
+</head>
+<body>
+    <form name="form1" method="post" action="./duyurularXmlAsIframesinav.aspx" id="form1">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKLTg0NTYxMzIxNQ8WAh4TVmFsaWRhdGVSZXF1ZXN0TW9kZQIBZGRAQtWCjcplAw1K+7arDN04rKEeAhVKgE0YOWIGvTnD1g==" />
+
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="F4BC1AA2" />
+    <div>
+    <p><a>Sınavlarda Uyulması Gereken Kurallar...!!!</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/0396b839-961e-4e9b-9797-91a2b24ae639.pdf" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>31 Ocak 2025</span></p>
+    </div>
+    </form>
+</body>
+</html>
+
+
+
+
+
+            <!-- <li><a href="https://mbsaktuerya.hacettepe.edu.tr/attachments/7b4b3ee2-7303-48a0-8d7f-9632ca0164be.pdf">2022-2023 Bahar Dönemi Lisans Ara Sınav Programı  </a></li> -->
+            <!-- <li><a href="https://mbsaktuerya.hacettepe.edu.tr/attachments/e182147e-ff46-408d-b3b6-9bfb15af82a0.pdf">2022-2023 Bahar Dönemi Lisansüstü Genel Sınav Programı  </a></li>
+            <li><a href="https://mbsaktuerya.hacettepe.edu.tr/attachments/4a97d395-ff32-4115-96c4-7fbbb677cf77.pdf">2022-2023 Bahar Dönemi Lisans Genel Sınav Programı  </a></li>
+            <li><a href="https://mbsaktuerya.hacettepe.edu.tr/attachments/a6354696-05c5-4fb8-b271-d3717eead49d.pdf">2022-2023 Bahar Dönemi Lisans Ek Sınav Programı  </a></li>
+            
+
+            <li><a href="https://mbsaktuerya.hacettepe.edu.tr/attachments/93caedbb-f7a7-4235-90e7-e9dd53f515ed.pdf">TKD Kodlu Derslerin Ek Sınav Takvimi  </a></li>
+            <li><a href="https://mbsaktuerya.hacettepe.edu.tr/attachments/11e73c61-4782-4744-9f1b-fd63d9465f37.pdf">AIT Kodlu Derslerin Ek Sınav Takvimi  </a></li> -->
+
+            
+            
+            </div>
+
+
+            <div class="baslik">Duyurular</div>
+            <div class="icerik" id="duyurular">
+            <!-- <iframe src="https://mbs.aktuerya.hacettepe.edu.tr/duyurularXmlAsIframe.aspx" style="width:100%; height:600px; border:0"></iframe> -->
+                
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>
+
+</title>
+    <style>
+        p,a{font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #333333;}
+        
+    </style>
+</head>
+<body>
+    <form name="form1" method="post" action="./duyurularXmlAsIframe.aspx" id="form1">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKLTg0NTYxMzIxNQ8WAh4TVmFsaWRhdGVSZXF1ZXN0TW9kZQIBZGQC+i/S2AwVHv8DttaaEdyjo+jxCamn2vgFKSGIfoAOhA==" />
+
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="A80D96D7" />
+    <div>
+    <p><a>2024-2025 Bahar Dönemi Lisans Ders Programı	</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/ef6d7ebd-760c-48cc-adca-73f5d721836c.pdf" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>7 Mart 2025</span></p><p><a>2024-2025 Bahar Dönemi Lisansüstü Ders Programı</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/efe20962-b997-40c6-8fbf-872deafdc911.pdf" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>7 Mart 2025</span></p><p><a>Dijital Afiş Yarışması</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/7f57fed4-d31a-4995-af63-20e13ab24a3e.pdf" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>7 Mart 2025</span></p><p><a>Girişimcilik Maratonu 2025</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/2e74b0da-2e41-437a-b856-e12dc679836d.pdf" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>6 Mart 2025</span></p><p><a>Ulusal Staj Programı Hakkında</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/1e8912eb-f2f8-4427-b736-5e9d16222599.jpg" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>3 Mart 2025</span></p><p><a>AKT401 dersi sadece öğretim üyeleri tarafından açılan ve her şubede en fazla 3 öğrenci ile yürütülen bir ders olup, öğrencilerin güz/bahar döneminde bu kısıtları dikkate alarak ders seçiminde bulunmaları gerekmektedir.</a><br/><span class="tarih"><b>Son Güncelleme: </b>27 Şubat 2025</span></p><p><a>Seminer Duyurusu</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/913c3f66-c6ca-4305-9f23-3e1f9dd1fa39.jpeg" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>21 Şubat 2025</span></p><p><a>Bölümümüz derslerine ilişkin ön koşullar (AKT 201 - IST 150 koşulu hariç) tüm öğrencilerimiz için kaldırılmıştır</a><br/><span class="tarih"><b>Son Güncelleme: </b>10 Şubat 2025</span></p><p><a>Program Dışı Öğrenme Transkripti Başvuru Aşamaları</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/810d8710-3d3a-4104-be83-2c22b8c80ce0.pdf" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>6 Şubat 2025</span></p><p><a>Kurumsal Politikalar Memnuniyet Anketi hakkında Kalite Yönetim Ofisinden alınan  yazı ile eki ilişikte gönderilmiş olup, Bölümümüz akademik ve idari personeli ile
+öğrencilerine duyurulması ve ankete katılımın sağlanması için  gereğini arz ederiz.</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/ce56f51a-d32f-46a5-9c97-dde9c280fa98.docx" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>3 Şubat 2025</span></p><p><a>Sınavlarda Uyulması Gereken Kurallar...!!!</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/0396b839-961e-4e9b-9797-91a2b24ae639.pdf" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>31 Ocak 2025</span></p><p><a>Bahar Dönemi Ders Alma Kuralları</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/5ea8f4dd-bd65-4723-ac06-c7936524d3a9.docx" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>17 Ocak 2025</span></p><p><a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSd9g1mUFF2LEYaZAACx48oPlPF7gr1hyxfYHH7jhVSt3bwtkg/viewform">Öğrencilerimizin dikkatine, 2024-2025 Güz Dönemi için hazırlanan öğrenci anketimizin doldurulmasını önemle rica ederiz (ankete erişim için tıklayın).</a><br/><span class="tarih"><b>Son Güncelleme: </b>17 Ocak 2025</span></p><p><a>Yabancı dil kursu</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/15125f6e-f42d-4f03-9102-d1591ac25e94.docx" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>14 Ocak 2025</span></p><p><a>Bilgi Teknolojileri ve İletişim Kurumu</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/1c4f2e5f-c769-4941-bc0a-274cee1fadde.pdf" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>14 Ocak 2025</span></p><p><a>Uluslararası Eğitim Kongresi</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/1b293cc2-0223-49e1-b871-3604846ababf.pdf" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>13 Ocak 2025</span></p><p><a>Ulusal Staj Programı (USAP) başvuruları başlamıştır. https://kariyerkapisi.cbiko.gov.tr/ linkinden başvuru yapabilirsiniz.</a><br/><span class="tarih"><b>Son Güncelleme: </b>25 Aralık 2024</span></p><p><a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSdSxQp50bDzthVLYOB7-S3TyUDdcGVUc5py7D7JnM8lGBmR9Q/viewform">2025 Güz Dönemi Program Çıktıları Anketi</a><br/><span class="tarih"><b>Son Güncelleme: </b>24 Aralık 2024</span></p><p><a>Kariyer ve Yetkinlik Buluşmaları </a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/a153710a-5c0a-4816-b8d3-7b9439a36e9a.pdf" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>17 Aralık 2024</span></p><p><a>Öğrenci E-Postaları </a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/15de10c6-7dc4-4625-9d18-450dcd2dd32d.pdf" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>16 Aralık 2024</span></p><p><a>Atatürk Üniversitesi TOEFL ve IELTS Hazırlık Kursu Duyurusu</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/e761210b-911d-4320-8945-f45154769336.pdf" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>5 Aralık 2024</span></p><p><a>E Ticaret & E İhracat 101 Eğitimi</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/295d5f26-2050-46b8-b421-0768b06d6290.pdf" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>5 Aralık 2024</span></p><p><a>Yabancı Dil Kursları</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/151350fa-f5b4-4c0f-bdf1-789818f380fd.pdf" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>4 Aralık 2024</span></p><p><a>Beyond the Doorstep Projesi
+Yaygınlaştırma Faaliyeti</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/7453a7af-e10c-40ea-b0a8-e953304926d9.pdf" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>4 Aralık 2024</span></p><p><a>Disiplinlerarası STEM Eğitimi Tezli
+Yüksek Lisans Programı Duyurusu</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/8f93f69f-19fa-474d-98ea-3dca652e2bc2.pdf" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>4 Aralık 2024</span></p><p><a>Ulaşan ve Erişen Türkiye 2053 Üniversiteler Arası Ar-Ge Fikir Yarışması</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/a8a8934a-d3a9-4e52-96a4-189b8a50a2de.pdf" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>29 Kasım 2024</span></p><p><a>4001 Ulusal ve Uluslararası Yarışma/Etkinlik Katılım Desteği 2. Çağrısı</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/c3f7e3d8-53f4-4c51-8dc2-34a16f5979b3.pdf" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>9 Ekim 2024</span></p><p><a target="_blank" href="https://sksdb.hacettepe.edu.tr/files/tahakkuk/Ucretsiz_Beslenme_Destegi_Duyuru_2024.pdf">Beslenme Desteği </a><br/><span class="tarih"><b>Son Güncelleme: </b>1 Ekim 2024</span></p><p><a target="_blank" href="https://oidb.hacettepe.edu.tr/tr/menu/%3Cimg_src=httpfshacettepeedutryenika-161">ÇAP ve YANDAL Rehberi Hakkında</a><br/><span class="tarih"><b>Son Güncelleme: </b>1 Ekim 2024</span></p><p><a>Danışmanlık Ofis Saatleri Hakkında</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/308c31d7-cffb-4d42-9f92-e4f251c2fcf6.pdf" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>19 Eylül 2024</span></p><p><a>2024-2025 eğitim-öğretim yılı güz dönemi ders alma ve uygulama kuralları</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/7edd536f-d9d7-4ef8-bd84-2994142eb910.pdf" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>13 Eylül 2024</span></p><p><a>Yandal Kontenjan Bilgileri</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/444cfea2-1142-4283-b429-e1b36696b81d.pdf" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>26 Ağustos 2024</span></p><p><a>Çift Anadal Kontenjan Bilgileri</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/a72072e2-454f-4820-a75d-f2c95523396b.pdf" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>26 Ağustos 2024</span></p><p><a target="_blank" href="https://aktuerya.hacettepe.edu.tr/duyurular/StajYonergesiYeni23.pdf">AKT 329 Staj Dersi Hakkında</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/e43b27ca-b172-4d15-8f18-89ec18499a9c.pdf" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>27 Mayıs 2024</span></p><p><a>TÜBİTAK Öğrenci Projesi Kabulü Hakkında</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/0b4c0fcc-3aa3-4047-b669-bfa79d6b8cb2.pdf" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>27 Mayıs 2024</span></p><p><a>Üniversite Öğrencilerinin Sosyal Medya Kullanım Alışkanlıklarının Sanal Ortamdaki Yalnızlık Düzeyleri İle İlişkisinin İncelenmesi hk.</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/2812a419-af3f-4c95-bb76-b1b8b9f7303d.pdf" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>9 Mayıs 2024</span></p><p><a target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/47627159-c683-43f2-bc1b-950491faba2b.pdf">Mezunlarımızın Görüşleri</a><br/><span class="tarih"><b>Son Güncelleme: </b>21 Temmuz 2023</span></p><p><a>Azami Öğrenim Süresi Sonunda Mezuniyet Koşullarını Sağlayamayan Lisans-Önlisans Öğrencileri Hakkında Yapılacak İşlemlere İlişkin Uygulama İlkeleri</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/85812e59-69d9-48f7-84f5-089d1b026b8d.pdf" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>1 Haziran 2023</span></p><p><a>İktisadi ve İdari Bilimler Fakültesi Denkliği Hk.</a><a  target="_blank" href="https://mbsaktuerya.hacettepe.edu.tr/attachments/6ff15745-4dd3-4ab9-8ab7-074ea9c320aa.pdf" style="color:red"> (EK)</a><br><span class="tarih"><b>Son Güncelleme: </b>27 Ekim 2022</span></p>
+    </div>
+    </form>
+</body>
+</html>
+
+
+
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+
+
+
+<footer>
+    <div class="container">
+    <p>Hacettepe Üniversitesi Aktüerya Bilimleri Bölümü</p>
+<p>06800 Beytepe Ankara</p>
+    </div>
+</footer>
+<script src="https://aktuerya.hacettepe.edu.tr/src21/js/mobile-nav.js"></script>
+<script src="https://aktuerya.hacettepe.edu.tr/src21/js/easing.min.js"></script>
+</body>
+</html>
+
