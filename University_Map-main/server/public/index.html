@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSRM Route Finder</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        #map { height: 90vh; width: 100%; }
+        #controls { margin: 10px; }
+        #searchBox { margin-top: 10px; }
+
+        /* Sonuç listesi stil ayarları */
+        #resultsList li {
+            color: blue;
+            cursor: pointer;
+            padding: 5px;
+            margin-bottom: 5px;
+            list-style-type: none;
+        }
+
+        #resultsList li:hover {
+            background-color: #f0f0f0;
+            color: darkblue;
+        }
+
+        #hataForm {
+            display: none;
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            background: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            z-index: 1000;
+            width: 300px;
+        }
+
+        #hataForm input, #hataForm textarea {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        #hataForm button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 10px; /* Butonlar arasında boşluk */
+        }
+
+        #hataForm button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Kayıt Ol ve Giriş Yap butonları sağ üst köşe ve bold */
+        #registerSection {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        #registerSection button {
+            font-weight: bold;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        #registerSection button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Giriş ve Kayıt formları için stil */
+        #loginForm, #registerForm {
+            display: none;
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            z-index: 1000;
+            width: 300px;
+        }
+
+        #loginForm input, #registerForm input {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        #loginForm button, #registerForm button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #loginForm button:hover, #registerForm button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Bilgi Paneli Stil Ayarları */
+        #infoPanel {
+            padding: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            margin: 10px;
+            font-family: Arial, sans-serif;
+        }
+
+        #infoPanel h3, #infoPanel h4 {
+            margin-top: 10px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        #infoPanel pre {
+            background: #eef;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            white-space: pre-wrap;       /* Satırları sar */
+            word-wrap: break-word;       /* Kelimeleri böl */
+            font-size: 14px;
+        }
+
+        /* Responsive Düzenlemeler */
+        @media (max-width: 768px) {
+            #hataForm, #loginForm, #registerForm {
+                width: 90%;
+                left: 5%;
+            }
+
+            #infoPanel {
+                margin: 5px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="controls">
+        <label for="transport">Vasıta Türü:</label>
+        <select id="transport">
+            <option value="walking">Yaya</option>
+            <option value="cycling">Bisiklet</option>
+            <option value="driving">Araç</option>
+        </select>
+        <button onclick="calculateRoute()">Rota Hesapla</button>
+        <button id="hataEkleButton" disabled>Hata Ekle</button> <!-- Hata Ekle Butonu -->
+        <button id="duzenleButton" style="display:none;">Düzenle</button> <!-- Düzenle Butonu -->
+    </div>
+    
+    <input type="text" id="searchBox" placeholder="Konum Ara...">
+    <button id="searchButton">Ara</button>
+    <div id="requestDisplay" style="margin-top: 20px;"></div>
+    <ul id="resultsList"></ul>
+    
+    <!-- Sağ üst köşeye Giriş Yap ve Kayıt Ol butonları -->
+    <div id="registerSection">
+        <button onclick="showLoginForm()">Giriş Yap</button> <!-- Giriş Yap Butonu -->
+    </div>
+
+    <!-- Giriş Formu (Başlangıçta Gizli) -->
+    <div id="loginForm">
+        <h3>Giriş Yap</h3>
+        <input type="text" id="loginUsername" placeholder="Kullanıcı Adı">
+        <input type="password" id="loginPassword" placeholder="Şifre">
+        <button onclick="loginUser()">Giriş Yap</button>
+        <p>Eğer üye değilseniz <a href="#" onclick="showRegisterForm()">Kayıt Ol</a></p>
+    </div>
+
+    <!-- Kayıt Formu (Başlangıçta Gizli) -->
+    <!-- Kayıt Formu (Kullanıcı adı, şifre ve rol seçimi) -->
+    <div id="registerForm">
+        <h3>Kayıt Ol</h3>
+        <input type="text" id="username" placeholder="Kullanıcı Adı">
+        <input type="password" id="password" placeholder="Şifre">
+        <label for="role">Rol Seçin:</label>
+        <select id="role">
+            <option value="normal">Normal</option>
+            <option value="editor">Editör</option>
+            <option value="admin">Admin</option>
+        </select>
+        <button onclick="registerUser()">Kayıt Ol</button>
+        <p>Zaten üye misiniz? <a href="#" onclick="showLoginForm()">Giriş Yap</a></p>
+    </div>
+    
+    <!-- Hata ekleme formu -->
+    <div id="hataForm">
+        <h3>Hata Ekle/Düzenle</h3>
+        <input type="text" id="isimSoyisim" placeholder="İsim Soyisim">
+        <input type="text" id="hataTuru" placeholder="Hata Türü">
+        <textarea id="aciklama" placeholder="Açıklama"></textarea>
+        <button onclick="saveHata()">Kaydet</button>
+        <button onclick="deleteHata()" id="deleteButton">Sil</button> <!-- Sil butonu -->
+        <button onclick="closeHataForm()">İptal</button>
+    </div>
+
+    <!-- Bilgi Paneli -->
+    <div id="infoPanel">
+        <h3>Navigasyon API İstek ve Yanıt Verileri</h3>
+        <h4>İstek:</h4>
+        <pre id="routeRequest">Henüz bir istek yapılmadı.</pre>
+        <h4>Yanıt:</h4>
+        <pre id="routeResponse">Henüz bir yanıt alınmadı.</pre>
+    </div>
+    
+    <!-- Harita -->
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

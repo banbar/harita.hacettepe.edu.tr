@@ -1,0 +1,92 @@
+/* src/components/EventCarousel.css */
+
+/* Ana Carousel kapsayıcısı */
+.carousel-container {
+  width: 100%;
+  max-width: 800px;
+  height: 100%;         /* sabit yükseklik */
+  margin: 0 auto;
+  position: relative;
+   overflow: visible;      /* dış scrollbar’ı tamamen gizle */
+}
+.custom-swiper .swiper-button-prev {
+  transform: translateX(-100px);
+}
+.carousel-container,
+.carousel-container .carousel-slide-content {
+  overflow: hidden;  /* hem container’da hem slide içeriğinde taşmayı gizle */
+}
+.custom-swiper .swiper-button-next {
+  transform: translateX(100px);
+}
+/* Swiper container’ı */
+.custom-swiper {
+  width: 100%;
+  height: 100% !important;
+  overflow: hidden;      /* hiçbir overflow göstermesin */
+}
+
+/* Her slide’ın tam yükseklik almasını sağla */
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100% !important;
+  min-height: 0;         /* Flex içi taşmayı engelle */
+}
+
+/* İçerik kutusu: tam yüksekliği kaplar, sadece burada scroll’lanır */
+.carousel-slide-content {
+  width: 100%;
+  height: 100%;
+  min-height: 0;         /* Flex içi taşmayı engelle */
+  padding: 16px;
+  box-sizing: border-box;
+
+  overflow-y: auto;      /* dikey scroll burada */
+  overflow-x: hidden;
+
+  font-size: 1rem;       /* JS ile gerekirse düşürülecek */
+  transition: font-size 0.2s ease;
+  touch-action: pan-y;   /* mobilde dikey kaydırmayı yönlendir */
+}
+
+/* Navigasyon oklarının stili */
+.carousel-container .swiper-button-prev,
+.carousel-container .swiper-button-next {
+  color: rgba(12, 144, 233, 0.6);
+  width: 50px;
+  height: 60px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Pagination noktalarının altta kalması */
+.carousel-container .swiper-pagination {
+  bottom: 8px !important;
+}
+
+/* İnce, şık scrollbar (isteğe bağlı) */
+.carousel-slide-content::-webkit-scrollbar {
+  width: 6px;
+}
+.carousel-slide-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+.carousel-slide-content::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+
+/* WebKit dış scroll’ları da kapatmak için */
+.carousel-container::-webkit-scrollbar,
+.custom-swiper::-webkit-scrollbar {
+  display: none;
+}
+
+/* Firefox, Edge için */
+.carousel-container,
+.custom-swiper {
+  scrollbar-width: none;      /* Firefox */
+  -ms-overflow-style: none;   /* IE, Edge */
+}
