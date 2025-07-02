@@ -1,5 +1,0 @@
-Since membership approval is done via supervisor through the system, supervisor assignment should be done first for the application. 
-After the installation, the supervisor+2fa installation file in this folder is followed and supervisor assignment is started for the application.
-
-
-In the development phase, ethereal mail was used. An smtp server is required for the actual application in the project phase.
