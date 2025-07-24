@@ -9,31 +9,7 @@ docker run --rm `
 docker run --rm -v "$(pwd):/data" stefda/osmium-tool osmium cat -f pbf -o /data/map.pbf /data/map.osm
 
 
-
-EXCRACT
-docker run --rm -t -v D:/uygulama_test/data:/data osrm/osrm-backend `
-  osrm-extract -p /opt/foot.lua /data/foot/map.pbf
-
-partition 
-docker run --rm -t -v D:/uygulama_test/data:/data osrm/osrm-backend `
-  osrm-partition /data/bicycle/map.osrm
-CUSTOMİZE
-docker run --rm -t -v D:/uygulama_test/data:/data osrm/osrm-backend `
-  osrm-customize /data/foot/map.osrm
-
-
-
-sunucu kısmı : docker run -d -p 5000:5000 -v D:/uygulama_test/data/foot:/data osrm/osrm-backend osrm-routed --algorithm mld /data/map.osrm
-docker run -d -p 5001:5000 -v D:/uygulama_test/data/car:/data osrm/osrm-backend osrm-routed --algorithm mld /data/map.osrm
-docker run -d -p 5002:5000 -v D:/uygulama_test/data/bicycle:/data osrm/osrm-backend osrm-routed --algorithm mld /data/map.osrm
-
-
-
-
-
-
-
- 1) Extract
+# 1) Extract
 docker run --rm -t \
   -v "~/uygulama_test/data:/data" \
   osrm/osrm-backend \
@@ -74,3 +50,7 @@ docker run --rm -t \
   osrm/osrm-backend \
   osrm-customize /data/bicycle/map.osrm
 
+## Deployment to a Remote Site
+Server side : docker run -d -p 5000:5000 -v D:/uygulama_test/data/foot:/data osrm/osrm-backend osrm-routed --algorithm mld /data/map.osrm
+docker run -d -p 5001:5000 -v D:/uygulama_test/data/car:/data osrm/osrm-backend osrm-routed --algorithm mld /data/map.osrm
+docker run -d -p 5002:5000 -v D:/uygulama_test/data/bicycle:/data osrm/osrm-backend osrm-routed --algorithm mld /data/map.osrm
