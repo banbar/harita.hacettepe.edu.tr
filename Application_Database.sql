@@ -1,11 +1,11 @@
 
--- 2) Uzantýlar
+-- 1) Extensions
 CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
 CREATE EXTENSION IF NOT EXISTS postgis   WITH SCHEMA public;
 
--- 3) Tablo ve Sekans Tanýmlamalarý
+-- 2) Table and schemas 
 
--- units tablosu
+-- units table
 CREATE TABLE public.units (
   id          VARCHAR     NOT NULL,
   geom        geometry(Point,4326),
@@ -22,7 +22,7 @@ ALTER SEQUENCE public.birimler_id_seq
 ALTER TABLE public.units
   ALTER COLUMN id SET DEFAULT nextval('public.birimler_id_seq'::regclass);
 
--- events tablosu
+-- events table
 CREATE TABLE public.events (
   id         INTEGER     NOT NULL,
   title      VARCHAR(255) NOT NULL,
@@ -43,7 +43,7 @@ ALTER SEQUENCE public.etkinlikler_etkinlik_id_seq
 ALTER TABLE public.events
   ALTER COLUMN id SET DEFAULT nextval('public.etkinlikler_etkinlik_id_seq'::regclass);
 
--- update (hata_noktalar) tablosu
+-- update table
 CREATE TABLE public.update (
   id           INTEGER     NOT NULL,
   update_type  VARCHAR(100) NOT NULL,
@@ -60,7 +60,7 @@ ALTER SEQUENCE public.hata_noktalar_id_seq
 ALTER TABLE public.update
   ALTER COLUMN id SET DEFAULT nextval('public.hata_noktalar_id_seq'::regclass);
 
--- users tablosu
+-- users table
 CREATE TABLE public.users (
   id                      INTEGER     NOT NULL,
   username                VARCHAR(255) NOT NULL,
@@ -88,7 +88,7 @@ ALTER SEQUENCE public.users_id_seq
 ALTER TABLE public.users
   ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
 
--- 4) Birincil ve Benzersiz Anahtarlar
+-- 3) Primary keys (PKs) and Foreign Keys (FKs)
 ALTER TABLE public.units  ADD CONSTRAINT birimler_pkey PRIMARY KEY (id);
 ALTER TABLE public.events ADD CONSTRAINT etkinlikler_pkey PRIMARY KEY (id);
 ALTER TABLE public.update ADD CONSTRAINT hata_noktalar_pkey PRIMARY KEY (id);
@@ -98,7 +98,7 @@ ALTER TABLE public.users
   ADD CONSTRAINT users_username_key UNIQUE (username),
   ADD CONSTRAINT users_email_key    UNIQUE (email);
 
--- 5) Yabancý Anahtarlar
+-- 4) Foreign Keys
 ALTER TABLE public.units
   ADD CONSTRAINT fk_birimler_user FOREIGN KEY (user_id) REFERENCES public.users(id);
 
