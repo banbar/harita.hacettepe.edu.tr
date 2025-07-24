@@ -31,11 +31,7 @@ docker run --rm -t \
 
 
 
-
-
-
-
-  cd ~/uygulama_test
+cd ~/uygulama_test
 
 docker run --rm -t \
   -v "$(pwd)/data:/data" \
@@ -52,7 +48,7 @@ docker run --rm -t \
   osrm/osrm-backend \
   osrm-customize /data/bicycle/map.osrm
 
-## Deployment to a Remote Site
-Server side : docker run -d -p 5000:5000 -v D:/uygulama_test/data/foot:/data osrm/osrm-backend osrm-routed --algorithm mld /data/map.osrm
+## Server side
+docker run -d -p 5000:5000 -v D:/uygulama_test/data/foot:/data osrm/osrm-backend osrm-routed --algorithm mld /data/map.osrm
 docker run -d -p 5001:5000 -v D:/uygulama_test/data/car:/data osrm/osrm-backend osrm-routed --algorithm mld /data/map.osrm
 docker run -d -p 5002:5000 -v D:/uygulama_test/data/bicycle:/data osrm/osrm-backend osrm-routed --algorithm mld /data/map.osrm
