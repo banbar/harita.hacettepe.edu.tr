@@ -1,3 +1,5 @@
+# 0) .osm --> .pbf
+
 docker run --rm `
     -v "${PWD}:/data" `
     stefda/osmium-tool `
