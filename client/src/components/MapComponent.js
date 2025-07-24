@@ -661,6 +661,7 @@ const handleEditBirimSubmit = async () => {
 
 
 
+
 const calculateRoute = useCallback(async (start, end, mode) => {
 
   try {
@@ -682,7 +683,6 @@ const calculateRoute = useCallback(async (start, end, mode) => {
       `?overview=full&geometries=geojson`
 
     console.log('Rota Hesaplama URL:', url);
-    setRouteData(null);
 
     const { data } = await axios.get(url);
     console.log('Rota hesaplama yanıtı:', data);
@@ -1583,7 +1583,16 @@ const getRouteMidpoint = (geoJsonData) => {
 
       {/* — Mevcut description yerine website gösterimi — */}
       {birim.website && (
-        <Box sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
+          <Box
+    sx={{
+      display: 'flex',
+      alignItems: 'center',
+      mb: 0.5,
+      // İsterseniz Box’a da eklersiniz:
+       wordBreak: 'break-all',
+       overflowWrap: 'break-word',
+    }}
+  >
           <LanguageIcon fontSize="small" sx={{ mr: 0.5 }} />
           <Link
             href={birim.website.startsWith('http') ? birim.website : `https://${birim.website}`}

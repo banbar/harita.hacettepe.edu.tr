@@ -16,11 +16,9 @@ const EventDetails = ({
   setSnackbar,
 }) => {
   const { t } = useTranslation();
-  const allowedRoles = ['student_admin', 'personel_admin', 'supervisor','etkinlik'];
-
-  // Sadece bu rollerdeki kullanıcılar veya etkinliği oluşturan kişi silme butonunu görsün istersen:
+  const allowedRoles = ['student_admin', 'personel_admin', 'supervisor', 'etkinlik'];
   const canDelete = allowedRoles.includes(userRole);
-    
+
   // --- Tarih formatlama ---
   const dateObj = event.date ? new Date(event.date) : null;
   const formattedDate = dateObj
@@ -31,7 +29,7 @@ const EventDetails = ({
       })
     : t('notSpecified');
 
-  // --- Zamanı event.time’dan al, "HH:MM:SS" ise "HH:MM" olarak göster ---
+  // --- Zaman formatlama ---
   const formattedTime = event.time
     ? event.time.includes(':')
       ? event.time.slice(0, 5)
@@ -39,89 +37,75 @@ const EventDetails = ({
     : t('notSpecified');
 
   const handleDelete = async (e, id) => {
-  e.stopPropagation();
-  if (!window.confirm(t('confirmDeleteEvent'))) return;
+    e.stopPropagation();
+    if (!window.confirm(t('confirmDeleteEvent'))) return;
 
-  // 1) id’yi sayısala çevir
-  const eventId = Number(id);
-  
-
-  try {
-    // 2) DELETE isteği
-    await axios.delete(`${API_URL}/events/${eventId}`, {
-      headers: { Authorization: `Bearer ${userToken}` }
-    });
-
-    // 3) Başarı mesajı ve listeden kaldır
-    setSnackbar({ open: true, message: t('eventDeleted'), severity: 'success' });
-    setEvents(prev => prev.filter(ev => ev.id !== eventId));
-  } catch (error) {
-    // 4) Eğer 404 ise zaten pasifleşmiş, yine de başarı say
-    if (error.response?.status === 404) {
+    const eventId = Number(id);
+    try {
+      await axios.delete(`${API_URL}/events/${eventId}`, {
+        headers: { Authorization: `Bearer ${userToken}` },
+      });
       setSnackbar({ open: true, message: t('eventDeleted'), severity: 'success' });
       setEvents(prev => prev.filter(ev => ev.id !== eventId));
-    } else {
-      // gerçek bir hata varsa göster
-      console.error('Delete error:', error);
-      setSnackbar({ open: true, message: t('eventDeleteError'), severity: 'error' });
+    } catch (error) {
+      if (error.response?.status === 404) {
+        setSnackbar({ open: true, message: t('eventDeleted'), severity: 'success' });
+        setEvents(prev => prev.filter(ev => ev.id !== eventId));
+      } else {
+        console.error('Delete error:', error);
+        setSnackbar({ open: true, message: t('eventDeleteError'), severity: 'error' });
+      }
     }
-  }
-};
-
+  };
 
   return (
     <Box>
-      <Box>
-        {/* Resim varsa göster, tıklayınca yeni pencerede aç */}
-        {event.image_path && (
-          <Box
-            component="img"
-            src={`${API_URL}${event.image_path}`}
-            alt={event.title}
-            sx={{
-              width: '100%',
-              maxHeight: 200,
-              objectFit: 'cover',
-              mb: 1,
-              cursor: 'pointer',
-            }}
-            onClick={() =>
-              window.open(`${API_URL}${event.image_path}`, '_blank')
-            }
-          />
-        )}
+      {/* Resim varsa göster, tıklayınca yeni pencerede aç; carousel ile aynı stil */}
+      {event.image_path && (
+        <Box
+          component="img"
+          src={`${API_URL}${event.image_path}`}
+          alt={event.title}
+          onError={e => console.log(`Broken img src: ${e.target.src}`)}
+          onClick={() => window.open(`${API_URL}${event.image_path}`, '_blank')}
+          sx={{
+            width: 240,
+            height: 160,
+            objectFit: 'cover',
+            mb: 1,
+            cursor: 'pointer',
+            borderRadius: 1,
+            transition: 'transform 0.3s ease',
+            transformOrigin: 'center center',
+            '&:hover': { transform: 'scale(1.05)' },
+          }}
+        />
+      )}
 
+      {/* Başlık linkli */}
+      {event.website ? (
+        <Link href={event.website} target="_blank" rel="noopener noreferrer" underline="hover">
+          <Typography variant="h6" gutterBottom sx={{ cursor: 'pointer' }}>
+            {event.title}
+          </Typography>
+        </Link>
+      ) : (
         <Typography variant="h6" gutterBottom>
           {event.title}
         </Typography>
-        <Typography gutterBottom>
-          <strong>{t('date')}:</strong> {formattedDate}
-        </Typography>
-        <Typography gutterBottom>
-          <strong>{t('time')}:</strong> {formattedTime}
-        </Typography>
-        <Typography gutterBottom>
-          <strong>{t('eventType')}:</strong> {t(event.event_type)}
-        </Typography>
-        {/* Website her durumda gösterilsin */}
-        <Typography gutterBottom>
-          <strong>{t('website')}:</strong>&nbsp;
-          {event.website ? (
-            <Link
-              href={event.website}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {event.website}
-            </Link>
-          ) : (
-            t('notSpecified')
-          )}
-        </Typography>
+      )}
 
-      </Box>
+      <Typography gutterBottom>
+        <strong>{t('date')}:</strong> {formattedDate}
+      </Typography>
+      <Typography gutterBottom>
+        <strong>{t('time')}:</strong> {formattedTime}
+      </Typography>
+      <Typography gutterBottom>
+        <strong>{t('eventType')}:</strong> {t(event.event_type)}
+      </Typography>
 
-      {/* Yalnızca admin veya supervisor silme butonunu görsün */}
+      {/* Silme butonu */}
       {canDelete && (
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1 }}>
           <IconButton
@@ -142,8 +126,8 @@ EventDetails.propTypes = {
   event: PropTypes.shape({
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired,
-    time: PropTypes.string,               // artık time’dan okuyacağız
+    date: PropTypes.string,
+    time: PropTypes.string,
     event_type: PropTypes.string.isRequired,
     website: PropTypes.string,
     image_path: PropTypes.string,

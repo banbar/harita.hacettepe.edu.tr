@@ -10,6 +10,7 @@ const saltRounds = 10;
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const crypto     = require('crypto');
+const { EMAIL_FROM_NAME, EMAIL_USER } = process.env;
 
 console.log('EMAIL_HOST=', process.env.EMAIL_HOST);
 console.log('EMAIL_PORT=', process.env.EMAIL_PORT);
@@ -254,7 +255,7 @@ app.post('/api/register', async (req, res) => {
           pass: process.env.EMAIL_PASS            // uygulama şifresi
         }
       });
-      mailFrom = `"Hacettepe GIS" <${process.env.EMAIL_USER}>`;
+      mailFrom = `"${EMAIL_FROM_NAME}" <${EMAIL_USER}>`;
     }
   
     // 6) Mail içeriği ve gönderim
@@ -423,7 +424,7 @@ async function initMailer() {
       secure: testAccount.smtp.secure,
       auth: { user: testAccount.user, pass: testAccount.pass }
     });
-    mailFrom = `"Hacettepe GIS (Test)" <${testAccount.user}>`;
+    mailFrom = `"Hacettepe GIS2 (Test)" <${testAccount.user}>`;
   } else {
     transporter = nodemailer.createTransport({
       host: process.env.EMAIL_HOST,
@@ -431,7 +432,8 @@ async function initMailer() {
       secure: process.env.EMAIL_SECURE === 'true',
       auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS }
     });
-    mailFrom = `"Hacettepe GIS" <${process.env.EMAIL_USER}>`;
+      const { EMAIL_FROM_NAME, EMAIL_USER } = process.env;
+  mailFrom = `"${EMAIL_FROM_NAME}" <${EMAIL_USER}>`;
   }
 }
 initMailer().catch(console.error);

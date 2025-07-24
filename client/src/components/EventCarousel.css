@@ -4,7 +4,7 @@
 .carousel-container {
   width: 100%;
   max-width: 800px;
-  height: 100%;         /* sabit yükseklik */
+  height: 100%;      /* sabit yükseklik */
   margin: 0 auto;
   position: relative;
    overflow: visible;      /* dış scrollbar’ı tamamen gizle */

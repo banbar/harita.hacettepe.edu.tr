@@ -182,7 +182,8 @@ export default function EventForm({
             'Course',
             'Career and Entrepreneurship',
             'Symposium',
-            'Thesis Defense'
+            'Thesis Defense',
+            'Ceremony'
           ].map(val => (
             <MenuItem key={val} value={val}>
               {t(val)}

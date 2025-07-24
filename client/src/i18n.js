@@ -3,6 +3,8 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
+const emailDomain = process.env.REACT_APP_EMAIL_DOMAIN || 'hacettepe.edu.tr';
+
 const resources = {
   en: {
     translation: {
@@ -176,7 +178,7 @@ const resources = {
   "dateRequired": "Date is required.",
   "locationRequired": "Location is required.",
   "eventTypeRequired": "Event type is required.",
-  "register_email_domain_error":"Please enter an email with the extension @hacettepe.edu.tr",
+  "register_email_domain_error":`Please enter an email with the extension @${emailDomain}`,
   "notSpecified":"Not Specified",
   "contactInfoRequired": "Contact info is required.",
   "descriptionRequired": "Description is required.",
@@ -264,6 +266,7 @@ const resources = {
        "title": "Başlık",
   "date": "Tarih",
   "time": "Saat",
+  "Ceremony":"Tören",
   "location": "Konum",
   "eventType": "Etkinlik Türü",
   "Seminar": "Seminer",
@@ -271,7 +274,7 @@ const resources = {
   "Concert": "Konser",
   "Sports": "Spor",
   hacettepe: process.env.REACT_APP_SIDEBAR_LABEL || 'Hacettepe',
-  "register_email_domain_error":"Lütfen @hacettepe.edu.tr uzantılı bir e-posta girin",
+  "register_email_domain_error":`Lütfen uzantısı @${emailDomain} olan bir e-posta giriniz`,
   "harita":"Harita",
   "Expo": "Fuar",
   "contactInfo": "İletişim Bilgisi",

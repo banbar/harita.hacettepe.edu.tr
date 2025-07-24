@@ -37,7 +37,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 const drawerWidth = 320;
 
 // Yerleşke sınırı
-const BBOX = { minLat: 39.859147, maxLat: 39.875209, minLon: 32.724736, maxLon: 32.743655 };
+const BBOX = { minLat: 60.859147, maxLat: 60.875209, minLon: 60.724736, maxLon: 60.743655 };
 const isInsideYerleske = (lat, lon) =>
   lat >= BBOX.minLat && lat <= BBOX.maxLat && lon >= BBOX.minLon && lon <= BBOX.maxLon;
 
@@ -205,8 +205,9 @@ export default function Sidebar({
       handleLocationSelect(type);
       return;
     }
-    const { lat, lng } = val || {};
-    if (lat == null || lng == null || !isInsideYerleske(lat, lng)) {
+     const { lat, lng, isUnit } = val || {};
+    // Birimler listemizdekileri geç:
+    if (!isUnit && (lat == null || lng == null || !isInsideYerleske(lat, lng))) {
       setSnackbar({ open: true, message: t('yerleske_disinda'), severity: 'warning' });
       return;
     }

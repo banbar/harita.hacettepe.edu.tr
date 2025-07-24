@@ -73,7 +73,8 @@ export default function RegisterForm({ open, handleClose }) {
     setRole(newRole);
     setStep(2);
   };
-
+ const domain = process.env.REACT_APP_EMAIL_DOMAIN; 
+ const escaped = domain.replace(/\./g, '\\.');
   const handleChange = e => {
     const { name, value } = e.target;
     setForm(f => ({ ...f, [name]: value }));
@@ -87,7 +88,10 @@ export default function RegisterForm({ open, handleClose }) {
       setError(t('register_password_mismatch'));
       return;
     }
-      const domainRegex = /^[^\s@]+@hacettepe\.edu\.tr$/i;
+    const domainRegex = new RegExp(
+  `^[^\\s@]+@${escaped}$`,
+  'i'
+);
   if (!domainRegex.test(form.email)) {
     setError(t('register_email_domain_error'));
     return;
