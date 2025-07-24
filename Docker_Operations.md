@@ -24,15 +24,18 @@ docker run --rm -t \
   osrm-partition /data/foot/map.osrm
 
 # 3) Customize
+### Bicycle
 docker run --rm -t \
   -v "~/uygulama_test/data:/data" \
   osrm/osrm-backend \
   osrm-customize /data/bicycle/map.osrm
 
+docker run --rm -t \
+  -v "$(pwd)/data:/data" \
+  osrm/osrm-backend \
+  osrm-customize /data/bicycle/map.osrm
 
-
-cd ~/uygulama_test
-
+### Foot
 docker run --rm -t \
   -v "$(pwd)/data:/data" \
   osrm/osrm-backend \
@@ -43,12 +46,21 @@ docker run --rm -t \
   osrm/osrm-backend \
   osrm-partition /data/foot/map.osrm
 
+### Car
 docker run --rm -t \
   -v "$(pwd)/data:/data" \
   osrm/osrm-backend \
-  osrm-customize /data/bicycle/map.osrm
+  osrm-extract -p /opt/car.lua /data/car/map.pbf
+
+docker run --rm -t \
+  -v "$(pwd)/data:/data" \
+  osrm/osrm-backend \
+  osrm-partition /data/car/map.osrm
+
+
+
 
 ## Server side
-docker run -d -p 5000:5000 -v D:/uygulama_test/data/foot:/data osrm/osrm-backend osrm-routed --algorithm mld /data/map.osrm
-docker run -d -p 5001:5000 -v D:/uygulama_test/data/car:/data osrm/osrm-backend osrm-routed --algorithm mld /data/map.osrm
-docker run -d -p 5002:5000 -v D:/uygulama_test/data/bicycle:/data osrm/osrm-backend osrm-routed --algorithm mld /data/map.osrm
+* docker run -d -p 5000:5000 -v D:/uygulama_test/data/foot:/data osrm/osrm-backend osrm-routed --algorithm mld /data/map.osrm
+* docker run -d -p 5001:5000 -v D:/uygulama_test/data/car:/data osrm/osrm-backend osrm-routed --algorithm mld /data/map.osrm
+* docker run -d -p 5002:5000 -v D:/uygulama_test/data/bicycle:/data osrm/osrm-backend osrm-routed --algorithm mld /data/map.osrm
