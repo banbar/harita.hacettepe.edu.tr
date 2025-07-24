@@ -66,7 +66,7 @@ Change to the folder: *~\foot*
 docker run -d -p 5001:5000 -v "${PWD}:/data" `
   osrm/osrm-backend osrm-routed --algorithm mld /data/map.osrm
 
-### bicycle → host 5002
+### bicycle → host 50023
 Change to the folder: *~\bicycle* 
 
 docker run -d -p 5002:5000 -v "${PWD}:/data" `
