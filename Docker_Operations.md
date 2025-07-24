@@ -2,13 +2,13 @@
 docker run --rm `
     -v "${PWD}:/data" `
     stefda/osmium-tool `
-    osmium cat -f pbf -o /data/map.pbf /data/map.osm
+    osmium cat -f pbf -o /data/map.pbf /data/map.osm 
 
 # Docker Operations
 Create three folders for different transportation modes: i) car, ii) foot, and iii) bicycle.
 
 ## Car Folder
-Set-Location xxxxxx\car ---> Specifies the path to the folder required for routing.
+Change to the folder: *~\car* 
 
 ### 1) Extract
 docker run --rm -v "${PWD}:/data" `
@@ -23,7 +23,7 @@ docker run --rm -v "${PWD}:/data" `
   osrm/osrm-backend osrm-customize /data/map.osrm
 
 ## Foot Folder
-Set-Location xxxxxx\foot ---> Specifies the path to the folder required for routing.
+Change to the folder: *~\foot* 
 
 ### 1) Extract
 docker run --rm -v "${PWD}:/data" `
@@ -38,7 +38,7 @@ docker run --rm -v "${PWD}:/data" `
   osrm/osrm-backend osrm-customize /data/map.osrm
 
 ## Bicycle Folder
-Set-Location xxxxx\bicycle ---> Specifies the path to the folder required for routing.
+Change to the folder: *~\bicycle* 
 
 ### 1) Extract
 docker run --rm -v "${PWD}:/data" `
@@ -55,16 +55,19 @@ docker run --rm -v "${PWD}:/data" `
 ## Server Side Operations
 
 ### car → host 5000
-Set-Location xxxxx\car
+Change to the folder: *~\car* 
+
 docker run -d -p 5000:5000 -v "${PWD}:/data" `
   osrm/osrm-backend osrm-routed --algorithm mld /data/map.osrm
 
 ### foot → host 5001
-Set-Location xxxxxx\foot
+Change to the folder: *~\foot* 
+
 docker run -d -p 5001:5000 -v "${PWD}:/data" `
   osrm/osrm-backend osrm-routed --algorithm mld /data/map.osrm
 
 ### bicycle → host 5002
-Set-Location xxxxxx\bicycle
+Change to the folder: *~\bicycle* 
+
 docker run -d -p 5002:5000 -v "${PWD}:/data" `
   osrm/osrm-backend osrm-routed --algorithm mld /data/map.osrm
