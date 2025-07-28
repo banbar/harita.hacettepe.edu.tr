@@ -2,6 +2,8 @@
 
 This repo contains the code that enables a campus to develop a routing and event management framework.  
 
+The video tutorial to replicate  [ROAMer for Harvard University](https://youtu.be/mhjvFSBwrdw).
+
 Currently served at: [harita.hacettepe.edu.tr](harita.hacettepe.edu.tr).
 
 ## Active Contributors
